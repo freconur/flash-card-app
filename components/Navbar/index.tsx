@@ -15,12 +15,19 @@ const Navbar = () => {
       if(authUser){
         console.log('displayName',authUser.displayName)
         console.log('authUser',authUser)
+        console.log('authUser',authUser.refreshToken)
+        const userToken = authUser.refreshToken
         const displayname  = authUser.displayName
+        localStorage.setItem("userToken",userToken)
         setName(authUser.displayName)
         dispatch({type:"currentUsera", payload:authUser.displayName })
+  console.log('userToken',userToken)
+
       }
     })
   }, [user])
+  const infoToken = JSON.stringify(localStorage.getItem('userToken'))
+  console.log('infoToken',JSON.parse(infoToken))
 
   const handleSingInGoogle = () => {
     //aqui tengo que colocar el reducer que va a gestionar el login con google
