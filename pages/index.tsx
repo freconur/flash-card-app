@@ -1,6 +1,9 @@
+import { useAuthUser, withAuthUser } from 'next-firebase-auth'
 import Head from 'next/head'
 
 const Home = () => {
+  const user = useAuthUser()
+  console.log('user', user)
   return (
     <div>
       <Head>
@@ -11,5 +14,4 @@ const Home = () => {
     </div>
   )
 }
-
-export default Home
+export default withAuthUser()(Home)//funciona en client

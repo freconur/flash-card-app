@@ -23,17 +23,10 @@ const initAuth = () => {
       // databaseURL: 'https://my-example-app.firebaseio.com',
     },
     firebaseClientInitConfig: {
-      // apiKey: 'AIzaSyCzcuLYLvmhbjHqgGtRv36Gpjtl0uZFFP4', // required
-      // authDomain: 'flashcardsapi-4701e.firebaseapp.com',
-      // // databaseURL: 'https://my-example-app.firebaseio.com',
-      // projectId: 'flashcardsapi-4701e',
-      apiKey: "AIzaSyCzcuLYLvmhbjHqgGtRv36Gpjtl0uZFFP4",
-      authDomain: "flashcardsapi-4701e.firebaseapp.com",
-      projectId: "flashcardsapi-4701e",
-      storageBucket: "flashcardsapi-4701e.appspot.com",
-      messagingSenderId: "631500038191",
-      appId: "1:631500038191:web:bcfe72724649f485d4a6da",
-      measurementId: "G-LY44ES2T4H"
+      apiKey: 'AIzaSyCzcuLYLvmhbjHqgGtRv36Gpjtl0uZFFP4', // required
+      authDomain: 'flashcardsapi-4701e.firebaseapp.com',
+      // databaseURL: 'https://my-example-app.firebaseio.com',
+      projectId: 'flashcardsapi-4701e',
     },
     cookies: {
       name: 'flash-card-study', // required
