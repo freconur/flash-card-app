@@ -8,7 +8,7 @@ import {
 } from 'next-firebase-auth'
 import { authApp } from '../firebase/firebase.config'
 
-const Demo = () => {
+const Dashboard = () => {
   const AuthUser = useAuthUser()
   console.log('auth', AuthUser)
   return (
@@ -35,4 +35,4 @@ export const getServerSideProps = withAuthUserTokenSSR(
 
 export default withAuthUser({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN
-})(Demo)//funciona en client
+})(Dashboard)//funciona en client

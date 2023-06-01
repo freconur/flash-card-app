@@ -1,40 +1,31 @@
-import { getAuth } from "firebase/auth";
-import app from "../../firebase/firebase.config";
+// import { app } from "firebase-admin"
+import { getAuth } from "firebase/auth"
+import Link from "next/link"
 import { useEffect, useReducer, useState } from "react";
-import { googleSignInInitiate } from "../../Reducer/User";
+import { authApp } from "../../firebase/firebase.config";
 import { DecksInitial, DecksReducer } from "../../Reducer/Decks.reducer";
 
 const Navbar = () => {
-  const auth = getAuth(app);
 
-  const [state, dispatch] = useReducer(DecksReducer, DecksInitial);
-  const { user,currentUsera } = state 
-  const [name, setName] = useState<string | null >("")
+// const AuthUser = useAuthUser()
+  // console.log('auth', AuthUser)
+  const [state, dispatch] = useReducer(DecksReducer, DecksInitial)
+  const [name, setName] = useState<string | null>("")
+  const auth = getAuth(authApp);
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if(authUser){
-        console.log('displayName',authUser.displayName)
         console.log('authUser',authUser)
-        console.log('authUser',authUser.refreshToken)
-        const userToken = authUser.refreshToken
-        const displayname  = authUser.displayName
-        localStorage.setItem("userToken",userToken)
         setName(authUser.displayName)
-        dispatch({type:"currentUsera", payload:authUser.displayName })
-  console.log('userToken',userToken)
-
+        dispatch({type:"userCurrent", payload:authUser.displayName })
       }
     })
-  }, [user])
-  const infoToken = JSON.stringify(localStorage.getItem('userToken'))
-  console.log('infoToken',JSON.parse(infoToken))
-
-  const handleSingInGoogle = () => {
-    //aqui tengo que colocar el reducer que va a gestionar el login con google
-    googleSignInInitiate(dispatch)
-  }
-  console.log('user', user)
-  console.log('currentUsera', currentUsera)
+  }, [name])
+  // const handleSingInGoogle = () => {
+  //   //aqui tengo que colocar el reducer que va a gestionar el login con google
+  //   googleSignInInitiate()
+  // }
+  
   return (
     <div className='w-full bg-blue-500 h-[60px] flex shadow-md justify-between p-2'>
       <div>FlashCards</div>
@@ -42,15 +33,25 @@ const Navbar = () => {
         <div className="w-[45px] h-[45px] justify-center text-xl items-center flex bg-green-400 font-semibold text-white rounded-full shadow-lg">F</div>
         <p className="text-white font-semibold text-lg capitalize flex items-center justify-center">
         
-          {user && 
-          // <span>hola {user.email}!</span>
-          <span>hola {name}!</span>
-          }
         </p>
-        <div onClick={handleSingInGoogle} className="bg-yellow-500 text-white font-semibold w-[150px] flex items-center justify-center capitalize rounded-sm cursor-pointer">Login</div>
+        <div>
+            {
+              name ?
+              <Link href="/dashboard">
+              <div className="text-white font-semibold text-md">Hola {name}!</div>
+              </Link>
+              :
+        <Link href="/auth">
+        <div  className="bg-yellow-500 text-white font-semibold w-[150px] flex items-center justify-center capitalize rounded-sm cursor-pointer">Login</div>
+        </Link>
+            }
+        </div>
       </div>
     </div>
   )
 }
 
 export default Navbar
+// export default withAuthUser({
+//   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN
+// })(Dashboard)

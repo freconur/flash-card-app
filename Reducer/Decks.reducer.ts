@@ -1,12 +1,12 @@
 
 type Decks =
   | { type: "getUser"; payload: user }
-  | { type: "currentUsera"; payload: string | null}
+  | { type: "userCurrent"; payload: string | null}
 
 
 export const DecksInitial = {
   user: {} as user,
-  currentUsera: "" as string | null ,
+  userCurrent: "" as string | null ,
   userGoogle: []
 }
 
@@ -18,10 +18,11 @@ export const DecksReducer = (state: typeof DecksInitial, action: Decks) => {
         user: action.payload,
         // currentUser: action.payload
       }
-      case "currentUsera":
+      case "userCurrent":
         return {
           ...state,
-          currentUsera: action.payload
+          userCurrent: action.payload
         }
+        
   }
 }
