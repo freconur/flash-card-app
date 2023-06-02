@@ -12,7 +12,7 @@ const Navbar = () => {
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        console.log('authUser', authUser)
+        // console.log('authUser', authUser)
         setName(authUser.displayName)
         dispatch({ type: "userCurrent", payload: authUser.displayName })
       }
