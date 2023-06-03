@@ -8,7 +8,7 @@ import {
 } from 'next-firebase-auth'
 import { authApp } from '../firebase/firebase.config'
 import { useEffect, useReducer, useState } from 'react'
-import { CreateUser, UserDecks, ValidateUser } from '../Reducer/UserDecks'
+import { CreateUser, ValidateUser } from '../Reducer/UserDecks'
 import { DecksInitial, DecksReducer } from '../Reducer/Decks.reducer'
 import LayoutDashboard from '../layout/LayoutDashboard'
 import { TestUser } from '../helpers/userFunctions'
@@ -35,7 +35,7 @@ const Dashboard = () => {
   // }
 
   useEffect(() => {
-    TestUser(dispatch, infoUser, setUser, user)
+    TestUser(dispatch, infoUser)
   }, [])
   return (
     <LayoutDashboard>

@@ -1,20 +1,18 @@
-import { useEffect, useReducer } from "react"
-import AddButtonDeck from "../AddButtonDeck/AddButtonDeck"
-import { UserDecks } from "../../Reducer/UserDecks"
+import { useEffect, useReducer, useState } from "react"
 import { DecksInitial, DecksReducer } from "../../Reducer/Decks.reducer"
 import AddDeck from "../AddDeck/AddDeck"
 
 const SidebarDashboard = () => {
 
   const [state, dispatch] = useReducer(DecksReducer, DecksInitial)
-  // const { userDecks } = state
-    useEffect(() => {
-      UserDecks(dispatch)
-    }, [])
+  const [newDeck, setNewDeck] = useState<any>()
+
+  const onChangeNewDeck = (newDeck: Decks): void => {
+    setNewDeck(newDeck)
+  }
   return (
     <div className='bg-black p-1 text-white h-screen w-[300px]'>
-      <AddButtonDeck />
-      <AddDeck/>
+      <AddDeck newDeck={onChangeNewDeck} />
 
     </div>
   )
