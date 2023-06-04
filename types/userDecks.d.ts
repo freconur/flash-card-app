@@ -1,30 +1,21 @@
-// interface Decks {
-// idUser?: string
-// decks?: Deck
-// }
-
-// interface Deck {
-// title?: string
-// flashcard?: FlashCard
-// }[]
-
-// interface FlashCard {
-//   pregunta?:string
-//   respuesta?:string
-// }
+interface UserInfo{
+  name?:string,
+  photo?:string,
+  email?:string
+}
 interface UserData {
   id?:string
   decks?: string
   email?:string
   name?:string
 }
-
-
-interface Decks {
+interface DecksUser {
+  id?:string,
   title?:string,
   flashcards?:Flashcards[]
 }
 interface Flashcards {
+  id?:string
   pregunta?:string
   respuesta?:string
 }
