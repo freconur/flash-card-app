@@ -13,9 +13,19 @@ interface DecksUser {
   id?:string,
   title?:string,
   flashcards?:Flashcards[]
+  focusDeck?:booelan
 }
 interface Flashcards {
   id?:string
   pregunta?:string
   respuesta?:string
+}
+
+interface DecksDataGlobal {
+  idUser: string,
+  decksUser: DecksUser[],
+  userCards: Flashcards[],
+  getFlashcardsFromDecks: Flashcards[],
+  localStorageValues: string | null,
+  conditionalValue:number 
 }

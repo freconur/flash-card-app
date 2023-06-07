@@ -13,23 +13,25 @@ import { DecksInitial, DecksReducer } from '../Reducer/Decks.reducer'
 import LayoutDashboard from '../layout/LayoutDashboard'
 import { TestUser } from '../helpers/userFunctions'
 import FlahsCards from '../components/FlashCards/FlahsCards'
+import SidebarDashboard from '../components/sidebar/SidebarDashboard'
+import { useGlobalContext } from '../context/ContextGlobal'
 
 const Dashboard = () => {
   const AuthUser = useAuthUser()
   const [state, dispatch] = useReducer(DecksReducer, DecksInitial)
   const [user, setUser] = useState<UserData>({})
   const infoUser = { id: `${AuthUser.id}`, email: `${AuthUser.email}`, name: `${AuthUser.displayName}` }
-
+  
   useEffect(() => {
     TestUser(dispatch, infoUser)
     dispatch({ type: "idUser", payload: `${AuthUser.id}` })
+    
   }, [])
   return (
     <LayoutDashboard>
-      <div className='w-full p-2 bg-background'>
-        mis flashcards
-        <FlahsCards idUser={`${AuthUser.id}`}/>
-      </div>
+    <div className='w-full bg-background'>
+      <FlahsCards idUser={`${AuthUser.id}`} />
+    </div>
     </LayoutDashboard>
   )
 }

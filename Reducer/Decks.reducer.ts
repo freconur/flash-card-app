@@ -4,6 +4,9 @@ type Decks =
   | { type: "idUser"; payload:string}
   | { type: "getDecksUser"; payload:DecksUser[]}
   | { type: "userCards"; payload:Flashcards[]}
+  | { type: "getFlashcardsFromDecks"; payload:Flashcards[]}
+  | { type: "localStorageValues"; payload:string | null}
+  | { type: "conditionalValue"; payload:number}
   // | { type: "userCurrent"; payload: string | null }
   // | { type: "userData"; payload: any }
 
@@ -12,10 +15,13 @@ export const DecksInitial = {
   // user: {} as user,
   idUser: "" as string,
   decksUser: [] as DecksUser[],
-  userCards: [] as Flashcards[]
+  userCards: [] as Flashcards[],
+  getFlashcardsFromDecks: [] as Flashcards[],
+  localStorageValues: "" as string | null,
+  conditionalValue: 0 as number
 }
 
-export const DecksReducer = (state: typeof DecksInitial, action: Decks) => {
+export const DecksReducer = (state: DecksDataGlobal, action: Decks) => {
   switch (action.type) {
     // case "getUser":
     //   return {
@@ -39,6 +45,25 @@ export const DecksReducer = (state: typeof DecksInitial, action: Decks) => {
           ...state,
           userCards:action.payload
         }
+      }
+      case "getFlashcardsFromDecks": {
+        return {
+          ...state,
+          getFlashcardsFromDecks: action.payload
+        }
+      }
+      case "localStorageValues": {
+        // console.log('localStorageValues', action.payload)
+        return {
+          ...state,
+          localStorageValues:action.payload
+        }
+      }
+      case "conditionalValue": {
+          return {
+            ...state,
+            conditionalValue: action.payload + 1
+          }
       }
   }
 }

@@ -9,7 +9,7 @@ const Home = () => {
         <title>Waliky store</title>
         <meta name="description" content="custom cup description" />
       </Head>
-
+    
       Bienvenido Flash Card Study
     </div>
   )

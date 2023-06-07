@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { AddNewDeck } from '../../Reducer/UserDecks'
 interface Props {
-  newDeck: (newDeck: Decks) => void
+  newDeck: (newDeck: DecksUser) => void
 }
 const AddDeck = ({ newDeck }: Props) => {
-  const [deckValues, setDeckValues] = useState<Decks>({
+  const [deckValues, setDeckValues] = useState<DecksUser>({
     title: "",
     flashcards: []
   })
@@ -20,8 +20,6 @@ const AddDeck = ({ newDeck }: Props) => {
     AddNewDeck(deckValues)
   }
 
-
-  console.log('deckValues', deckValues)
   return (
     <form onSubmit={newDeckSubmit}>
       <button className='w-full capitalize font-semibold text-md bg-green-500 rounded-lg p-2 text-white hover:bg-green-400'>agregar deck</button>

@@ -13,3 +13,8 @@ export async function TestUser(dispatch:(actioni:any)=>void, authUser:UserData) 
     console.log('no se creara un nuevo usuario con este id')
   }
 } 
+
+// const SelectDeck = (deckId: string) => {
+//   GetFlashCardsFromDecks(dispatch, idUser, deckId)
+//   console.log('getFlashcardsFromDecks',getFlashcardsFromDecks)
+// }

@@ -12,7 +12,6 @@ const Navbar = () => {
   const auth = getAuth(authApp);
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
-      console.log('authUser',authUser)
       if (authUser) {
         setUserInfoNav({
           ...userInfoNav,

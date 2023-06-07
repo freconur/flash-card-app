@@ -27,7 +27,7 @@ module.exports = {
       colors: {
         'principal': '#121f3d',
         'secundary':'#1e2942',
-        'background':'#292b3c'
+        'background':'#1b1f44'
       },
       gridTemplateRows: {
         // Complex site-specific row configuration
