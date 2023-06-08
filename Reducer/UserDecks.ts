@@ -51,7 +51,17 @@ export const MyDecksUser = (dispatch: (action: any) => void, id: string) => {
     snapshot.docs.forEach((doc) => {
       decksUser.push({ ...doc.data(), id: doc.id });
     });
-    dispatch({ type: "getDecksUser", payload: decksUser });
+    const decksUserFocusProperty = decksUser.map((deck, index) => ({
+      ...deck,
+      focus: false
+    }))
+    const decksUserFocusWithFirstIndex = decksUserFocusProperty.map((deck, index) => {
+      if(index === 0) {
+        deck.focus = true 
+      }
+      return deck
+    })
+    dispatch({ type: "getDecksUser", payload: decksUserFocusWithFirstIndex });
   });
 }
 
@@ -74,37 +84,35 @@ export const FlashCardsInit = async (dispatch: (action: any) => void, id: string
     });
     dispatch({ type: "userCards", payload: userCards });
   });
-
-
-  // console.log('value',value)
-  // const rta1 = localStorage.getItem('FLASHCARDS_USER')
-  // if(rta1 !== value) {
-  //   dispatch({type: "localStorageValues", payload:rta1})
-  // }
 }
 
-export const GetFlashCardsFromDecks = async(dispatch: (action: any) => void, idUser: string, deckId: string,focusdeck:boolean) => {
-  // const colRefDeck = doc(db,`/decks-user/${idUser}/flashcards/`,deckId);
-  // batch.update(colRefDeck, {"focusDeck": false});
-  // await batch.commit();
-  
-  const sfRef = doc(db,`/decks-user/${idUser}/flashcards/`,deckId);
-  
-  await updateDoc(sfRef, {
-    focusDeck: !focusdeck
-  });
+export const GetFlashCardsFromDecks = async (dispatch: (action: any) => void, idUser: string, deckId: string, decksUser: DecksUser[]) => {
+  let decksUserFocusProperty
+  if (decksUser) {
+    decksUserFocusProperty = decksUser?.map((deck) => ({
+      ...deck,
+      focus: false
+    }))
+  }
+  if(decksUserFocusProperty) {
+    const rta = decksUserFocusProperty.map(deck => {
+      if(deck.id === deckId){
+        deck.focus = true
+      }
+      return deck
+    })
+    dispatch({ type: "getDecksUser", payload: rta });
+  }
 
   const colRefCards = collection(db, `/decks-user/${idUser}/flashcards/${deckId}/cards`)
   const userCards: Flashcards[] = [];
-  onSnapshot(colRefCards,(snapshot) => {
+  onSnapshot(colRefCards, (snapshot) => {
     snapshot.docs.forEach((doc) => {
-      userCards.push({...doc.data(), id:doc.id})
+      userCards.push({ ...doc.data(), id: doc.id })
     })
-    dispatch({type: "getFlashcardsFromDecks", payload: userCards})
+    dispatch({ type: "getFlashcardsFromDecks", payload: userCards })
   }
-)}
-
-export const FlashcardsLocalstorage = (dispatch:(action:any)=>void,value:string) => {
-  
-
+  )
 }
+
+

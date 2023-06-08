@@ -15,10 +15,11 @@ export const DecksInitial = {
   // user: {} as user,
   idUser: "" as string,
   decksUser: [] as DecksUser[],
+  copyDecks: [] as DecksUser[],
   userCards: [] as Flashcards[],
   getFlashcardsFromDecks: [] as Flashcards[],
   localStorageValues: "" as string | null,
-  conditionalValue: 0 as number
+  conditionalValue: 0 as number,
 }
 
 export const DecksReducer = (state: DecksDataGlobal, action: Decks) => {
@@ -35,9 +36,11 @@ export const DecksReducer = (state: DecksDataGlobal, action: Decks) => {
         }
       }
       case "getDecksUser": {
+        const copy= {...action.payload}
         return {
           ...state,
-          decksUser:action.payload
+          decksUser:action.payload,
+          copyDecks: copy
         }
       }
       case "userCards":{

@@ -21,10 +21,10 @@ const AddDeck = ({ newDeck }: Props) => {
   }
 
   return (
-    <form onSubmit={newDeckSubmit}>
+    <form className='' onSubmit={newDeckSubmit}>
       <button className='w-full capitalize font-semibold text-md bg-green-500 rounded-lg p-2 text-white hover:bg-green-400'>agregar deck</button>
       <label className='capitalize font-semibold text-lg'>nombre</label>
-      <input value={deckValues.title} name="title" onChange={handleChangeNewDeck} className='text-gray-500 bg-blue-100 w-[270px] rounded-lg h-[40px]' type="text" />
+      <input value={deckValues.title} name="title" onChange={handleChangeNewDeck} className='text-gray-500 w-full bg-blue-100 rounded-lg h-[40px]' type="text" />
     </form>
   )
 }

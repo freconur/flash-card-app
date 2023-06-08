@@ -21,6 +21,9 @@ module.exports = {
       xl: '1200px'
     },
     extend: {
+      height: {
+        'altura':'calc(100vh - 60px)'
+      },
       margin: {
         'centrar-contenido': 'auto'
       },

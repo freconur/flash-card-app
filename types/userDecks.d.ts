@@ -14,6 +14,7 @@ interface DecksUser {
   title?:string,
   flashcards?:Flashcards[]
   focusDeck?:booelan
+  focus?:boolean
 }
 interface Flashcards {
   id?:string
