@@ -23,15 +23,15 @@ const Navbar = () => {
     })
   }, [])
   return (
-    <nav className='w-full  bg-principal h-[60px] flex shadow-md justify-between p-2'>
+    <nav className='w-full  bg-principal h-[60px] flex shadow-md justify-between p-4'>
       <div className="text-white font-semibold">FlashCards</div>
-      <div className="flex gap-3">
+      <div className="flex gap-1 items-center justify-center">
         
         {/* <Image className='w-full' src={`/${userInfoNav?.photo}`} width={30} height={30} alt={`${userInfoNav?.name}`} /> */}
         <img className='w-[30px] h-[30px]' src={`${userInfoNav?.photo}`} alt={`${userInfoNav?.name}`} />
         <p className="text-white font-semibold text-lg capitalize flex items-center justify-center">
         </p>
-        <div>
+        <div className="flex items-center justify-center">
           {
             userInfoNav ?
               <Link href="/dashboard">

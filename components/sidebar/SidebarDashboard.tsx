@@ -13,7 +13,7 @@ const SidebarDashboard = () => {
     setNewDeck(newDeck)
   }
   return (
-    <div className='bg-secundary  overflow-y-scroll p-1 text-white h-altura w-[400px]'>
+    <div className='bg-secundary  overflow-y-scroll p-4 pr-2 text-white h-altura w-[500px]'>
   {/* <div > */}
       <AddDeck newDeck={onChangeNewDeck} />
       <DecksUser/>

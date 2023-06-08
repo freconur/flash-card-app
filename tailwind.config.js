@@ -29,7 +29,7 @@ module.exports = {
       },
       colors: {
         'principal': '#121f3d',
-        'secundary':'#1e2942',
+        'secundary':'rgb(12 24 50)',
         'background':'#1b1f44'
       },
       gridTemplateRows: {
