@@ -10,7 +10,7 @@ interface Props {
 type GlobalContextProps = {
   globalData: DecksDataGlobal,
   TestId: (id:string) => void,
-  SelectDeck: (deckId:string,id:string) => void
+  SelectDeck: (deckId:string,id:string,focusdeck:boolean) => void
 }
 //crear el contexto
 export const GlobalContext = createContext<GlobalContextProps>({} as GlobalContextProps) 
@@ -21,8 +21,8 @@ export function GlobalProvider ({children}:Props) {
   const TestId = (id:string) => {
     dispatch({type:"idUser", payload:id})
   }
-  const SelectDeck = (deckId:string,id:string) => {
-    GetFlashCardsFromDecks(dispatch, id, deckId)
+  const SelectDeck = (deckId:string,id:string, focusdeck:boolean) => {
+    GetFlashCardsFromDecks(dispatch, id, deckId,focusdeck)
   }
   return (
     <GlobalContext.Provider value={{

@@ -13,13 +13,14 @@ import {
   limit,
   onSnapshot,
   Timestamp,
+  writeBatch,
 } from "firebase/firestore";
 import { app } from "../firebase/firebase.config";
 
 
 
 const db = getFirestore(app)
-
+const batch = writeBatch(db);
 
 export const ValidateUser = async (dispatch: (action: any) => void, id: string) => {
   const colRef = doc(db, "decks-user", id)
@@ -82,7 +83,17 @@ export const FlashCardsInit = async (dispatch: (action: any) => void, id: string
   // }
 }
 
-export const GetFlashCardsFromDecks = async (dispatch: (action: any) => void, idUser: string, deckId: string) => {
+export const GetFlashCardsFromDecks = async(dispatch: (action: any) => void, idUser: string, deckId: string,focusdeck:boolean) => {
+  // const colRefDeck = doc(db,`/decks-user/${idUser}/flashcards/`,deckId);
+  // batch.update(colRefDeck, {"focusDeck": false});
+  // await batch.commit();
+  
+  const sfRef = doc(db,`/decks-user/${idUser}/flashcards/`,deckId);
+  
+  await updateDoc(sfRef, {
+    focusDeck: !focusdeck
+  });
+
   const colRefCards = collection(db, `/decks-user/${idUser}/flashcards/${deckId}/cards`)
   const userCards: Flashcards[] = [];
   onSnapshot(colRefCards,(snapshot) => {
