@@ -30,7 +30,9 @@ module.exports = {
       colors: {
         'principal': '#121f3d',
         'secundary':'rgb(12 24 50)',
-        'background':'#1b1f44'
+        'background':'#1b1f44',
+        'blue-slate':'bg-slate-800',
+        // 'fisrt-color': ''
       },
       gridTemplateRows: {
         // Complex site-specific row configuration

@@ -1,23 +1,25 @@
-import { useEffect, useReducer, useState } from "react"
-import { DecksInitial, DecksReducer } from "../../Reducer/Decks.reducer"
-import styles from '../../styles/Scrollbar.module.css'
-import AddDeck from "../AddDeck/AddDeck"
+import { useState } from "react"
 import DecksUser from "../MyDecksUser/DecksUser"
 import Logout from "../Logout/Logout"
+import AddDeckButtonSidebar from "../AddDeckButtonSidebar/AddDeckButtonSidebar"
+import AddDeck from "../AddDeck/AddDeck"
 
 const SidebarDashboard = () => {
 
   const [newDeck, setNewDeck] = useState<DecksUser>()
+  const [showFormAddDeck, setShowFormAddDeck] = useState<boolean>(false)
 
   const onChangeNewDeck = (newDeck: DecksUser): void => {
     setNewDeck(newDeck)
   }
+  console.log('showFormAddDeck',showFormAddDeck)
   return (
-    <div className='bg-secundary  overflow-y-scroll p-4 pr-2 text-white h-altura w-[500px]'>
-  {/* <div > */}
-      <AddDeck newDeck={onChangeNewDeck} />
-      <DecksUser/>
-      <Logout/>
+    <div className={`  relative bg-secundary  overflow-y-scroll p-4 pr-2 text-white h-altura w-[500px]`}>
+      {/* <div > */}
+      <AddDeck setShowFormAddDeck={setShowFormAddDeck} showFormAddDeck={showFormAddDeck} newDeck={onChangeNewDeck} />
+      <AddDeckButtonSidebar showFormAddDeck={showFormAddDeck} setShowFormAddDeck={setShowFormAddDeck}/>
+      <DecksUser />
+      <Logout />
     </div>
   )
 }

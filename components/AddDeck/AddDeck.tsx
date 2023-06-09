@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import { AddNewDeck } from '../../Reducer/UserDecks'
+import { RiArrowLeftLine } from "react-icons/ri";
+import { DECKS_COLOR } from '../../utils/color.var';
+import AddDeckForm from '../AddDeckForm/AddDeckForm';
 interface Props {
-  newDeck: (newDeck: DecksUser) => void
+  newDeck: (newDeck: DecksUser) => void,
+  showFormAddDeck: boolean,
+  setShowFormAddDeck: React.Dispatch<React.SetStateAction<boolean>>
 }
-const AddDeck = ({ newDeck }: Props) => {
+const AddDeck = ({ newDeck, showFormAddDeck, setShowFormAddDeck }: Props) => {
   const [deckValues, setDeckValues] = useState<DecksUser>({
     title: "",
     flashcards: []
@@ -21,11 +26,16 @@ const AddDeck = ({ newDeck }: Props) => {
   }
 
   return (
-    <form className='' onSubmit={newDeckSubmit}>
-      <button className='w-full capitalize font-semibold text-md bg-green-500 rounded-lg p-2 text-white hover:bg-green-400'>agregar deck</button>
-      <label className='capitalize font-semibold text-lg'>nombre</label>
-      <input value={deckValues.title} name="title" onChange={handleChangeNewDeck} className='text-gray-500 w-full bg-blue-100 rounded-lg h-[40px]' type="text" />
-    </form>
+    <div className={`${showFormAddDeck && 'duration-300 left-0'} absolute -left-[500px] duration-300 bg-secundary p-2 w-full h-altura`}>
+      <div className='flex justify-between mb-4 items-center gap-4'>
+        <div onClick={() => setShowFormAddDeck(!showFormAddDeck)} className='flex justify-center items-center bg-transparent  text-gray-300 hover:text-gray-100 duration-100'>
+          <RiArrowLeftLine className='cursor-pointer text-xl' />
+        </div>
+        <h3 className='capitalize text-gray-200 font-semibold text-xl w-full text-center'>crear deck de estudio</h3>
+      </div>
+      <AddDeckForm/>
+    </div>
+
   )
 }
 
