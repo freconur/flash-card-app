@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AddNewDeck } from '../../Reducer/UserDecks'
 import { RiArrowLeftLine } from "react-icons/ri";
-import { DECKS_COLOR } from '../../utils/color.var';
-import AddDeckForm from '../AddDeckForm/AddDeckForm';
+import { DECKS_COLOR, DECKS_COLORS } from '../../utils/color.var';
+import DeckColors from '../DeckColors/DeckColors';
 interface Props {
   newDeck: (newDeck: DecksUser) => void,
   showFormAddDeck: boolean,
   setShowFormAddDeck: React.Dispatch<React.SetStateAction<boolean>>
 }
 const AddDeck = ({ newDeck, showFormAddDeck, setShowFormAddDeck }: Props) => {
+  const [disabledButtonDeck, setDisabledButtonDeck] = useState<boolean>(true)
   const [deckValues, setDeckValues] = useState<DecksUser>({
     title: "",
     flashcards: []
@@ -24,7 +25,6 @@ const AddDeck = ({ newDeck, showFormAddDeck, setShowFormAddDeck }: Props) => {
     newDeck(deckValues)
     AddNewDeck(deckValues)
   }
-
   return (
     <div className={`${showFormAddDeck && 'duration-300 left-0'} absolute -left-[500px] duration-300 bg-secundary p-2 w-full h-altura`}>
       <div className='flex justify-between mb-4 items-center gap-4'>
@@ -33,7 +33,20 @@ const AddDeck = ({ newDeck, showFormAddDeck, setShowFormAddDeck }: Props) => {
         </div>
         <h3 className='capitalize text-gray-200 font-semibold text-xl w-full text-center'>crear deck de estudio</h3>
       </div>
-      <AddDeckForm/>
+      <form onSubmit={newDeckSubmit}>
+        <label className='capitalize font-semibold text-lg'>nombre</label>
+        <input
+          id="input-name"
+          autoFocus
+          value={deckValues.title} name="title"
+          onChange={handleChangeNewDeck}
+          className='text-gray-100 w-full p-2 bg-transparent rounded-lg border-[1px] focus:outline-none focus:border-sky-500 border-gray-400 h-[40px] '
+          type="text" />
+        {/* colors */}
+        <DeckColors/>
+        {/* create button */}
+        <button disabled={!deckValues.title && true} className={` w-full capitalize font-semibold text-md  rounded-lg p-2  text-gray-800 hover:opacity-80 duration-300  ${deckValues.title === "" ? "bg-gradient-to-r from-gray-500 to-gray-700 cursor-default" : " cursor-pointer bg-gradient-to-r from-sky-200 to-sky-700"}`}>crear deck</button>
+      </form>
     </div>
 
   )

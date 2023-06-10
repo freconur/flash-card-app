@@ -30,3 +30,7 @@ interface DecksDataGlobal {
   localStorageValues: string | null,
   conditionalValue:number 
 }
+interface UseSelectColor {
+  color:string,
+  active:boolean
+}
