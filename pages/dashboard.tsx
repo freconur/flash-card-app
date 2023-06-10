@@ -53,8 +53,3 @@ export default withAuthUser({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN
 })(Dashboard)//funciona en client
 
-{/* <p onClick={() => setShowAnswer(!showAnswer)}>{deck.pregunta}</p>
-                              {
-                                showAnswer &&
-                                <p>{deck.respuesta}</p>
-                              }  */}

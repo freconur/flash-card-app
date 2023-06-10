@@ -13,8 +13,6 @@ type GlobalContextProps = {
   TestId: (id: string) => void,
   SelectDeck: (deckId: string, id: string, decksUser: DecksUser[]) => void,
   DecksUserContext: (deckIdUser: string) => void,
-  // newValuesColors: UseSelectColor[] | undefined
-  pruebita: (id: string) => UseSelectColor[] | undefined
 }
 //crear el contexto
 export const GlobalContext = createContext<GlobalContextProps>({} as GlobalContextProps)
@@ -23,10 +21,6 @@ export const GlobalContext = createContext<GlobalContextProps>({} as GlobalConte
 export function GlobalProvider({ children }: Props) {
   const [globalData, dispatch] = useReducer(DecksReducer, DecksInitial)
 
-  const pruebita = (id: string) => {
-    const { newValuesColors } = useSelectColors(id)
-    return newValuesColors
-  }
   const TestId = (id: string) => {
     dispatch({ type: "idUser", payload: id })
   }
@@ -39,7 +33,6 @@ export function GlobalProvider({ children }: Props) {
   return (
     <GlobalContext.Provider value={{
       globalData,
-      pruebita,
       TestId,
       SelectDeck,
       DecksUserContext,

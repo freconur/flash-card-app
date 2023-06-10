@@ -12,7 +12,6 @@ const SidebarDashboard = () => {
   const onChangeNewDeck = (newDeck: DecksUser): void => {
     setNewDeck(newDeck)
   }
-  console.log('showFormAddDeck',showFormAddDeck)
   return (
     <div className={`  relative bg-secundary  overflow-y-scroll p-4 pr-2 text-white h-altura w-[500px]`}>
       {/* <div > */}
