@@ -6,17 +6,14 @@ import AddDeck from "../AddDeck/AddDeck"
 
 const SidebarDashboard = () => {
 
-  const [newDeck, setNewDeck] = useState<DecksUser>()
   const [showFormAddDeck, setShowFormAddDeck] = useState<boolean>(false)
 
-  const onChangeNewDeck = (newDeck: DecksUser): void => {
-    setNewDeck(newDeck)
-  }
+  
   console.log('showFormAddDeck',showFormAddDeck)
   return (
     <div className={`  relative bg-secundary  overflow-y-scroll p-4 pr-2 text-white h-altura w-[500px]`}>
       {/* <div > */}
-      <AddDeck setShowFormAddDeck={setShowFormAddDeck} showFormAddDeck={showFormAddDeck} newDeck={onChangeNewDeck} />
+      <AddDeck setShowFormAddDeck={setShowFormAddDeck} showFormAddDeck={showFormAddDeck}/>
       <AddDeckButtonSidebar showFormAddDeck={showFormAddDeck} setShowFormAddDeck={setShowFormAddDeck}/>
       <DecksUser />
       <Logout />

@@ -11,7 +11,8 @@ type GlobalContextProps = {
   globalData: DecksDataGlobal,
   TestId: (id:string) => void,
   SelectDeck: (deckId:string,id:string,decksUser:DecksUser[]) => void,
-  DecksUserContext:(deckIdUser:string) => void
+  DecksUserContext:(deckIdUser:string) => void,
+  
 }
 //crear el contexto
 export const GlobalContext = createContext<GlobalContextProps>({} as GlobalContextProps) 
@@ -28,6 +29,7 @@ export function GlobalProvider ({children}:Props) {
   const DecksUserContext = (deckIdUser:string) => {
     MyDecksUser(dispatch, deckIdUser)
   }
+  
   return (
     <GlobalContext.Provider value={{
       globalData,

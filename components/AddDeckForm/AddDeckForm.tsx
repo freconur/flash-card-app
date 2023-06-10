@@ -1,7 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { DECKS_COLOR } from '../../utils/color.var'
+import { AddNewDeck } from '../../Reducer/UserDecks'
 
-const AddDeckForm = () => {
+interface Props {
+  newDeck:(newDeck: DecksUser)=> void,
+}
+const AddDeckForm = ({newDeck}:Props) => {
+  const [deckValues, setDeckValues] = useState<DecksUser>({
+    title: "",
+    flashcards: []
+  })
+  const handleChangeNewDeck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDeckValues({
+      ...deckValues,
+      [e.target.name]: e.target.value
+    })
+  }
+  const newDeckSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    newDeck(deckValues)
+    AddNewDeck(deckValues)
+  }
   return (
     <form onSubmit={newDeckSubmit}>
         <label className='capitalize font-semibold text-lg'>nombre</label>
