@@ -13,8 +13,8 @@ interface DecksUser {
   id?:string,
   title?:string,
   focus?:boolean
-  colorDeck?:string
-  secondColorDeck?:string
+  colorDeck?:string,
+  countCards?:number
 }
 interface Flashcards {
   id?:string

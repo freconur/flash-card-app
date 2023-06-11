@@ -11,7 +11,6 @@ const AddDeck = ({ newDeck, showFormAddDeck, setShowFormAddDeck }: Props) => {
   const [deckValues, setDeckValues] = useState<DecksUser>({
     title: "",
     colorDeck: "",
-    secondColorDeck:""
   })
   const handleChangeNewDeck = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDeckValues({
@@ -24,7 +23,6 @@ const AddDeck = ({ newDeck, showFormAddDeck, setShowFormAddDeck }: Props) => {
     newDeck(deckValues)
     AddNewDeck(deckValues)
   }
-  console.log('deckValues',deckValues)
   return (
     <div className={`${showFormAddDeck && 'duration-300 left-0'} absolute -left-[500px] duration-300 bg-secundary p-2 w-full h-altura`}>
       <div className='flex justify-between mb-4 items-center gap-4'>

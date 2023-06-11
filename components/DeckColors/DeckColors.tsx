@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useSelectColors } from '../../Hooks/useSelectColor'
-import { useGlobalContext } from '../../context/ContextGlobal'
 
 interface Props {
   deckValues: DecksUser,
