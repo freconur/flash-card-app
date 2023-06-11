@@ -12,9 +12,9 @@ interface UserData {
 interface DecksUser {
   id?:string,
   title?:string,
-  focusDeck?:booelan
   focus?:boolean
-  colorDeck:string
+  colorDeck?:string
+  secondColorDeck?:string
 }
 interface Flashcards {
   id?:string

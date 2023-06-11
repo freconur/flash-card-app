@@ -32,6 +32,7 @@ module.exports = {
         'secundary':'rgb(12 24 50)',
         'background':'#1b1f44',
         'blue-slate':'bg-slate-800',
+        
         // 'fisrt-color': ''
       },
       gridTemplateRows: {

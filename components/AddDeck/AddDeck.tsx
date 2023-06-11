@@ -10,7 +10,8 @@ interface Props {
 const AddDeck = ({ newDeck, showFormAddDeck, setShowFormAddDeck }: Props) => {
   const [deckValues, setDeckValues] = useState<DecksUser>({
     title: "",
-    colorDeck: ""
+    colorDeck: "",
+    secondColorDeck:""
   })
   const handleChangeNewDeck = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDeckValues({
