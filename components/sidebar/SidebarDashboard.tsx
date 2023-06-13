@@ -3,6 +3,7 @@ import DecksUser from "../MyDecksUser/DecksUser"
 import Logout from "../Logout/Logout"
 import AddDeckButtonSidebar from "../AddDeckButtonSidebar/AddDeckButtonSidebar"
 import AddDeck from "../AddDeck/AddDeck"
+import UpdateDeck from "../UpdateDeck/UpdateDeck"
 
 const SidebarDashboard = () => {
 
@@ -16,6 +17,7 @@ const SidebarDashboard = () => {
     <div className={`  relative bg-secundary  overflow-y-scroll p-4 pr-2 text-white h-altura w-[500px]`}>
       {/* <div > */}
       <AddDeck setShowFormAddDeck={setShowFormAddDeck} showFormAddDeck={showFormAddDeck} newDeck={onChangeNewDeck} />
+      <UpdateDeck newDeck={onChangeNewDeck}/>
       <AddDeckButtonSidebar showFormAddDeck={showFormAddDeck} setShowFormAddDeck={setShowFormAddDeck}/>
       <DecksUser />
       <Logout />

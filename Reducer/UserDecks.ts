@@ -121,4 +121,12 @@ export const GetFlashCardsFromDecks = async (dispatch: (action: any) => void, id
   )
 }
 
+export const updateDataDeck = async(id:string, idDeck:string) => {
+  const deckToUpdate = doc(db, `/decks-user/${id}/flashcards`, idDeck);
+
+await updateDoc(deckToUpdate, {
+  title: "nuevo title"
+});
+}
+
 
