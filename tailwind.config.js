@@ -38,9 +38,10 @@ module.exports = {
       gridTemplateRows: {
         // Complex site-specific row configuration
         'layoutGlobal': 'auto 1fr auto',
-        'layoutCatBts': '80% 20%',
       },
       gridTemplateColumns: {
+        // 'layoutDecks': '75% 25%',
+        'layoutDecks': '90% minmax(110px, 110px)',
         'gridCardProduct': '40% 60%',
         'gridSidebar': '18% 82%',
         'gridSidebarMd': '20% auto',

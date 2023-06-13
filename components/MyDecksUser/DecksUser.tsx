@@ -19,7 +19,6 @@ const DecksUser = () => {
       DecksUserContext(`${authUser?.uid}`)//global
     })
   }, [])
-  console.log('decksUser',decksUser)
   return (
     <div>
       <ListDecks idUser={idUser} decksUser={decksUser} />

@@ -12,15 +12,10 @@ import {
   query,
   limit,
   onSnapshot,
-  Timestamp,
-  writeBatch,
 } from "firebase/firestore";
 import { app } from "../firebase/firebase.config";
 
-
-
 const db = getFirestore(app)
-const batch = writeBatch(db);
 
 export const ValidateUser = async (dispatch: (action: any) => void, id: string) => {
   const colRef = doc(db, "decks-user", id)
@@ -50,21 +45,18 @@ export const MyDecksUser = (dispatch: (action: any) => void, id: string) => {
     snapshot.docs.forEach((doc) => {
       decksUser.push({ ...doc.data(), id: doc.id });
     });
-    const addCountCardProperty = decksUser.map(async(deck) => {
+    decksUser.map(async(deck) => {
       const querySnapshot = await getDocs(collection(db, `/decks-user/${id}/flashcards/${deck.id}/cards`));
-      // console.log(querySnapshot.size)
       let count:number = 0 
       querySnapshot.forEach((doc) => {
         count = count + 1
       });
       const countCards = doc(db, `/decks-user/${id}/flashcards/`, `${deck.id}`);
 
-      // Set the "capital" field of the city 'DC'
       await updateDoc(countCards, {
         countCards: count
       });
   })
-  console.log('res', addCountCardProperty)
     const decksUserFocusProperty = decksUser.map((deck, index) => ({
       ...deck,
       focus: false
@@ -119,8 +111,6 @@ export const GetFlashCardsFromDecks = async (dispatch: (action: any) => void, id
   }
 
   const colRefCards = collection(db, `/decks-user/${idUser}/flashcards/${deckId}/cards`)
-  // const colRefCardsCount = collection(db, `/decks-user/${idUser}/flashcards/`)
-// console.log('colRefCardsCount',colRefCardsCount.data())
   const userCards: Flashcards[] = [];
   onSnapshot(colRefCards, (snapshot) => {
     snapshot.docs.forEach((doc) => {
