@@ -41,7 +41,8 @@ module.exports = {
       },
       gridTemplateColumns: {
         // 'layoutDecks': '75% 25%',
-        'layoutDecks': '90% minmax(110px, 110px)',
+        'layoutDecks': '80% minmax(40px, 50px)',
+        // 'layoutDecks': '90% 10%',
         'gridCardProduct': '40% 60%',
         'gridSidebar': '18% 82%',
         'gridSidebarMd': '20% auto',

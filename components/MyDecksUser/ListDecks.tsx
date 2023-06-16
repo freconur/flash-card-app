@@ -5,27 +5,18 @@ import { COLOR_TO_DECK } from '../../utils/colorToDeck';
 import { useEffect, useRef, useState } from 'react';
 import styles from '../../styles/DeckSettings.module.css'
 import useOnClickOutside from '../../Hooks/useOnClickOutside';
+import { RiEdit2Fill } from "react-icons/ri";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 interface Props {
   decksUser: DecksUser[],
   idUser: string
 }
 const ListDecks = ({ decksUser, idUser }: Props) => {
   const setting = useRef(null);
-  // const myRefElement2 = useRef(null);
-  
   const context = useGlobalContext()
-  const { SelectDeck,setUpdateDeckActive,updateDeckActive,updateDeckShow } = context
+  const { SelectDeck,updateDeckShow, DataToDeckUpdate } = context
   const [showSettingDeck, setShowSettingDeck] = useState<boolean>(false)
   //usare el localstorage para pasarle estos valores a la pagina de flashcards y actualizarlo acada vez que algun valor en local storage cambie
-  useEffect(() => {
-
-  },[showSettingDeck])
-  const testHoli = () => {
-    console.log('decksUser',decksUser)
-    console.log('idUser',idUser)
-    console.log('holi')
-  }
-  
   const handleClickOutside = () => {
       setShowSettingDeck(false)
   }
@@ -48,18 +39,10 @@ const ListDecks = ({ decksUser, idUser }: Props) => {
                     <h3 className='capitalize font-semibold text-lg'>
                       {decks.title}
                     </h3>
-                    <div ref={setting} className={`${styles.dropdown} ${showSettingDeck && styles.dropdownTest} `}>
-                      <button onClick={() => setShowSettingDeck(!showSettingDeck)} className={styles.link}>
-                        {/* <div className={` flex justify-end text-right items-center`}> */}
-                        <RiMore2Fill className='text-lg text-right' />
-                        {/* </div> */}
-                      </button>
-                      {/* settings */}
-                      <div className={styles.dropdownMenu}>
-                        <input onClick={() => setUpdateDeckActive(!updateDeckActive)}  className={`capitalize text-gray-100 p-1 pl-3 bg-secundary hover:bg-background duration-300 cursor-pointer`} placeholder="editar" />
-                        <input onClick={testHoli}  className={`${showSettingDeck ===false && "hidden"} capitalize text-gray-100 p-1 pl-3 bg-secundary hover:bg-background duration-300 cursor-pointer`} placeholder="eliminar" />
-                      </div>
-                      {/* settings */}
+                    <div className="flex justify-center items-center gap-3">
+                      <RiEdit2Fill onClick={() => {DataToDeckUpdate(decks),updateDeckShow()}} className='text-gray-300 hover:text-gray-100 font-semibold text-md'/>
+
+                      <RiDeleteBin6Fill onClick={updateDeckShow} className='text-gray-300 hover:text-gray-100 font-semibold text-md'/>
                     </div>
                   </div>
 

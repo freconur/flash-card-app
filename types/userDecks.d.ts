@@ -21,14 +21,20 @@ interface Flashcards {
   pregunta?:string
   respuesta?:string
 }
-
+interface DecksUserToUpdate {
+  titleToUpdate?:string,
+  colorDeckToUpdate?:string,
+  countCardsToUpdate?:number
+}
 interface DecksDataGlobal {
   idUser: string,
   decksUser: DecksUser[],
   userCards: Flashcards[],
   getFlashcardsFromDecks: Flashcards[],
   localStorageValues: string | null,
-  conditionalValue:number 
+  conditionalValue:number,
+  settingsDeck: boolean,
+  deckToUpdate:DecksUser
 }
 interface UseSelectColor {
   color:string,

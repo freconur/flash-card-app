@@ -12,9 +12,9 @@ type GlobalContextProps = {
   TestId: (id: string) => void,
   SelectDeck: (deckId: string, id: string, decksUser: DecksUser[]) => void,
   DecksUserContext: (deckIdUser: string) => void,
-  updateDeckActive: boolean,
-  setUpdateDeckActive: React.Dispatch<React.SetStateAction<boolean>>,
-  updateDeckShow: () => void
+  updateDeckShow: () => void,
+  DataToDeckUpdate: (deck:DecksUser ) => void,
+  deckToUpdate:DecksUser,
 }
 //crear el contexto
 export const GlobalContext = createContext<GlobalContextProps>({} as GlobalContextProps)
@@ -22,7 +22,7 @@ export const GlobalContext = createContext<GlobalContextProps>({} as GlobalConte
 //2. crear el provider para prover el contexto
 export function GlobalProvider({ children }: Props) {
   const [globalData, dispatch] = useReducer(DecksReducer, DecksInitial)
-  const [updateDeckActive, setUpdateDeckActive] = useState<boolean>(false)
+  const { settingsDeck, deckToUpdate } = globalData
   const TestId = (id: string) => {
     dispatch({ type: "idUser", payload: id })
   }
@@ -33,9 +33,11 @@ export function GlobalProvider({ children }: Props) {
     MyDecksUser(dispatch, deckIdUser)
   }
   const updateDeckShow = () => {
-    setUpdateDeckActive(!updateDeckActive)
-    // dispatch({type:"updateDeckActiveTest", payload:})
-    // return updateDeckActive
+    if(settingsDeck === false) dispatch({type:"settingsDeck", payload:true})
+    if(settingsDeck === true) dispatch({type:"settingsDeck", payload:false})
+  }
+  const DataToDeckUpdate = (deck:DecksUser) => {
+      dispatch({type:"deckToUpdate", payload:deck })
   }
   return (
     <GlobalContext.Provider value={{
@@ -43,9 +45,9 @@ export function GlobalProvider({ children }: Props) {
       TestId,
       SelectDeck,
       DecksUserContext,
-      setUpdateDeckActive,
-      updateDeckActive,
-      updateDeckShow
+      updateDeckShow,
+      DataToDeckUpdate,
+      deckToUpdate,
     }}>
       {children}
     </GlobalContext.Provider>

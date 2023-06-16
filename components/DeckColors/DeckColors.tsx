@@ -3,7 +3,8 @@ import { useSelectColors } from '../../Hooks/useSelectColor'
 
 interface Props {
   deckValues: DecksUser,
-  setDeckValues:React.Dispatch<React.SetStateAction<DecksUser>>
+  setDeckValues:React.Dispatch<React.SetStateAction<DecksUser>>,
+  // deckColor:string | undefined
 }
 const DeckColors = ({deckValues, setDeckValues}:Props) => {
   const [selectColor, setSelectColor] = useState<string>("")

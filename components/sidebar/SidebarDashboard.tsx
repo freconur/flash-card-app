@@ -17,7 +17,7 @@ const SidebarDashboard = () => {
     <div className={`  relative bg-secundary  overflow-y-scroll p-4 pr-2 text-white h-altura w-[500px]`}>
       {/* <div > */}
       <AddDeck setShowFormAddDeck={setShowFormAddDeck} showFormAddDeck={showFormAddDeck} newDeck={onChangeNewDeck} />
-      <UpdateDeck newDeck={onChangeNewDeck}/>
+      <UpdateDeck/>
       <AddDeckButtonSidebar showFormAddDeck={showFormAddDeck} setShowFormAddDeck={setShowFormAddDeck}/>
       <DecksUser />
       <Logout />

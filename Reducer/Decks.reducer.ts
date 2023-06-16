@@ -6,6 +6,8 @@ type Decks =
   | { type: "getFlashcardsFromDecks"; payload:Flashcards[]}
   | { type: "localStorageValues"; payload:string | null}
   | { type: "conditionalValue"; payload:number}
+  | { type: "settingsDeck"; payload:boolean}
+  | { type: "deckToUpdate"; payload:DecksUser}
   
 
 
@@ -17,6 +19,8 @@ export const DecksInitial = {
   getFlashcardsFromDecks: [] as Flashcards[],
   localStorageValues: "" as string | null,
   conditionalValue: 0 as number,
+  settingsDeck: false as boolean,
+  deckToUpdate: {} as DecksUser
 }
 
 export const DecksReducer = (state: DecksDataGlobal, action: Decks) => {
@@ -59,6 +63,18 @@ export const DecksReducer = (state: DecksDataGlobal, action: Decks) => {
             ...state,
             conditionalValue: action.payload + 1
           }
+      }
+      case "settingsDeck": {
+        return {
+          ...state,
+          settingsDeck:action.payload
+        }
+      }
+      case "deckToUpdate": {
+        return {
+          ...state,
+          deckToUpdate:action.payload
+        }
       }
   }
 }
