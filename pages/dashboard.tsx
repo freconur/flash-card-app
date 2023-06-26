@@ -30,7 +30,7 @@ const Dashboard = () => {
   return (
     <LayoutDashboard>
     <div className='w-full bg-background'>
-      <FlahsCards idUser={`${AuthUser.id}`} />
+      <FlahsCards/>
     </div>
     </LayoutDashboard>
   )

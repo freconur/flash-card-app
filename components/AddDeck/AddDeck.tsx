@@ -28,7 +28,7 @@ const AddDeck = ({ newDeck, showFormAddDeck, setShowFormAddDeck }: Props) => {
     setDeckValues(INITIAL_DECK_VALUES)
   }
   return (
-    <div className={`${showFormAddDeck && 'duration-300 left-0'} absolute z-[200] -left-[500px] duration-300 bg-secundary p-2 w-full h-altura`}>
+    <div className={`${showFormAddDeck && 'duration-300 h-full bottom-0 left-0'} absolute z-[200] -left-[500px] duration-300 bg-secundary p-2 w-full h-altura`}>
       <div className='flex justify-between mb-4 items-center gap-4'>
         <div onClick={() => setShowFormAddDeck(!showFormAddDeck)} className='flex justify-center items-center bg-transparent  text-gray-300 hover:text-gray-100 duration-100'>
           <RiArrowLeftLine className='cursor-pointer text-xl' />

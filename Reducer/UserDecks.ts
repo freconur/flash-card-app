@@ -92,7 +92,8 @@ export const FlashCardsInit = async (dispatch: (action: any) => void, id: string
   });
 }
 
-export const GetFlashCardsFromDecks = async (dispatch: (action: any) => void, idUser: string, deckId: string, decksUser: DecksUser[]) => {
+// export const GetFlashCardsFromDecks = async (dispatch: (action: any) => void, idUser: string, deckId: string,deckTitle:string, decksUser: DecksUser[]) => {
+  export const GetFlashCardsFromDecks = async (dispatch: (action: any) => void, deckData:DecksUser,idUser:string, decksUser: DecksUser[]) => {
   let decksUserFocusProperty
   if (decksUser) {
     decksUserFocusProperty = decksUser?.map((deck) => ({
@@ -102,7 +103,7 @@ export const GetFlashCardsFromDecks = async (dispatch: (action: any) => void, id
   }
   if(decksUserFocusProperty) {
     const rta = decksUserFocusProperty.map(deck => {
-      if(deck.id === deckId){
+      if(deck.id === deckData.id){
         deck.focus = true
       }
       return deck
@@ -110,23 +111,31 @@ export const GetFlashCardsFromDecks = async (dispatch: (action: any) => void, id
     dispatch({ type: "getDecksUser", payload: rta });
   }
 
-  const colRefCards = collection(db, `/decks-user/${idUser}/flashcards/${deckId}/cards`)
+  const colRefCards = collection(db, `/decks-user/${idUser}/flashcards/${deckData.id}/cards`)
   const userCards: Flashcards[] = [];
   onSnapshot(colRefCards, (snapshot) => {
     snapshot.docs.forEach((doc) => {
       userCards.push({ ...doc.data(), id: doc.id })
     })
-    dispatch({ type: "getFlashcardsFromDecks", payload: userCards })
+    dispatch({ type: "getFlashcardsFromDecks", payload: userCards, payload2: deckData.title, payload3:deckData})
   }
   )
 }
 
-export const updateDataDeck = async(id:string, idDeck:string) => {
-  const deckToUpdate = doc(db, `/decks-user/${id}/flashcards`, idDeck);
+  export const updateDataDeck = async(id:string, dataToUpdate:DecksUser) => {
 
-await updateDoc(deckToUpdate, {
-  title: "nuevo title"
-});
+const deckToUpdate = doc(db, `/decks-user/${id}/flashcards`, `${dataToUpdate.id}`);
+
+  await updateDoc(deckToUpdate, {
+    title: dataToUpdate.title,
+    colorDeck: dataToUpdate.colorDeck,
+    countCards: dataToUpdate.countCards,
+  });
+}
+
+export const deleteDeck = async(id:string, idDeck:string) => {
+
+await deleteDoc(doc(db, `/decks-user/${id}/flashcards`, `${idDeck}`));
 }
 
 

@@ -34,7 +34,9 @@ interface DecksDataGlobal {
   localStorageValues: string | null,
   conditionalValue:number,
   settingsDeck: boolean,
-  deckToUpdate:DecksUser
+  deckToUpdate:DecksUser,
+  getTitleFromDeck:string,
+  currentlyDeck?:DecksUser
 }
 interface UseSelectColor {
   color:string,

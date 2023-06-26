@@ -1,14 +1,16 @@
+import { useState } from "react"
 import SidebarDashboard from "../components/sidebar/SidebarDashboard"
+import DeleteDeckModal from "../modal/DeleteDeckModal"
 
 
 interface Props {
   children: JSX.Element
 }
-const LayoutDashboard = ({children}:Props ) => {
+const LayoutDashboard = ({ children }: Props) => {
   return (
-    <div className="flex">
-      <SidebarDashboard/>
-        {children}
+    <div className="relative flex">
+      <SidebarDashboard />
+      {children}
     </div>
   )
 }

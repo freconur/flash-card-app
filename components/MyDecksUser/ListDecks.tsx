@@ -7,6 +7,7 @@ import styles from '../../styles/DeckSettings.module.css'
 import useOnClickOutside from '../../Hooks/useOnClickOutside';
 import { RiEdit2Fill } from "react-icons/ri";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import DeleteDeckModal from '../../modal/DeleteDeckModal';
 interface Props {
   decksUser: DecksUser[],
   idUser: string
@@ -14,47 +15,55 @@ interface Props {
 const ListDecks = ({ decksUser, idUser }: Props) => {
   const setting = useRef(null);
   const context = useGlobalContext()
-  const { SelectDeck,updateDeckShow, DataToDeckUpdate } = context
+  const { SelectDeck, updateDeckShow, DataToDeckUpdate,globalData } = context
   const [showSettingDeck, setShowSettingDeck] = useState<boolean>(false)
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
+  const [getIdDeck, setGetIdDeck] = useState<string>('')
   //usare el localstorage para pasarle estos valores a la pagina de flashcards y actualizarlo acada vez que algun valor en local storage cambie
   const handleClickOutside = () => {
-      setShowSettingDeck(false)
+    setShowSettingDeck(false)
   }
-  useOnClickOutside(setting,handleClickOutside)
+  useOnClickOutside(setting, handleClickOutside)
   return (
-    <div className=''>
+    <div>
+        {
+          showDeleteModal &&
+          <DeleteDeckModal getIdDeck={getIdDeck} idUser={idUser} showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} />
+        }
       <ul className='grid gap-3 py-4'>
         {
           decksUser &&
           decksUser.map((decks, index) => {
             return (
-              <div id={`${index}`}
-                onClick={() => SelectDeck(`${decks?.id}`, idUser, decksUser)}
-                className={`${decks?.colorDeck && COLOR_TO_DECK[Number(decks?.colorDeck)]} ${decks?.focus ? "p-[1.5px] pl-2" : "pl-2"} cursor-pointer rounded-md `}
-                key={decks.id}>
+                <div id={`${index}`}
+                  // onClick={() => SelectDeck(`${decks?.id}`,`${decks?.title}`, idUser, decksUser)}
+                  onClick={() => SelectDeck(decks,idUser, decksUser)}
+                  className={`${decks?.colorDeck && COLOR_TO_DECK[Number(decks?.colorDeck)]} ${decks?.focus ? "p-[1.5px] pl-2" : "pl-2"} cursor-pointer rounded-md `}
+                  key={decks.id}>
 
-                <div className={`p-2 pl-5 rounded-r-md overflow-hidden w-full h-full bg-slate-800  ${decks?.focus ? "" : "border-gray-400 border-t-[0.1px] border-r-[0.1px] border-b-[0.1px]"} `}>
+                  <div className={`p-2 pl-5 rounded-r-md overflow-hidden w-full h-full bg-slate-800  ${decks?.focus ? "" : "border-gray-400 border-t-[0.1px] border-r-[0.1px] border-b-[0.1px]"} `}>
 
-                  <div className={`relative  grid grid-cols-layoutDecks z-[100]`} >
-                    <h3 className='capitalize font-semibold text-lg'>
-                      {decks.title}
-                    </h3>
-                    <div className="flex justify-center items-center gap-3">
-                      <RiEdit2Fill onClick={() => {DataToDeckUpdate(decks),updateDeckShow()}} className='text-gray-300 hover:text-gray-100 font-semibold text-md'/>
+                    <div className={`relative  grid grid-cols-layoutDecks z-[100]`} >
+                      <h3 className='capitalize font-semibold text-lg'>
+                        {decks.title}
+                      </h3>
+                      <div className="flex justify-center items-center gap-3">
+                        <RiEdit2Fill onClick={() => { DataToDeckUpdate(decks), updateDeckShow() }} className='text-gray-300 hover:text-gray-100 font-semibold text-md' />
 
-                      <RiDeleteBin6Fill onClick={updateDeckShow} className='text-gray-300 hover:text-gray-100 font-semibold text-md'/>
+                        <RiDeleteBin6Fill onClick={() => {setShowDeleteModal(!showDeleteModal); setGetIdDeck(`${decks?.id}`)}} className='text-gray-300 hover:text-gray-100 font-semibold text-md' />
+
+                      </div>
+                    </div>
+
+                    <div className='my-2'>
+                      <span className='text-gray-200 text-sm capitalize'>{decks.countCards} tarjetas</span>
+                    </div>
+                    <div className='hover:border-gray-400 border-[0.1px] w-full border-gray-500 rounded-md p-1 flex justify-center capitalize font-semibold text-sm items-center gap-2'>
+                      <RxPlus className='font-light text-lg text-slate-50' />
+                      <span className='text-slate-50'>agregar tarjetas</span>
                     </div>
                   </div>
-
-                  <div className='my-2'>
-                    <span className='text-gray-200 text-sm capitalize'>{decks.countCards} tarjetas</span>
-                  </div>
-                  <div className='hover:border-gray-400 border-[0.1px] w-full border-gray-500 rounded-md p-1 flex justify-center capitalize font-semibold text-sm items-center gap-2'>
-                    <RxPlus className='font-light text-lg text-slate-50' />
-                    <span className='text-slate-50'>agregar tarjetas</span>
-                  </div>
                 </div>
-              </div>
             )
           })
         }

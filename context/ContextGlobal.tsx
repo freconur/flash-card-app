@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer, useState } from "react";
 import { DecksInitial } from "../Reducer/Decks.reducer";
 import { DecksReducer } from "../Reducer/Decks.reducer";
 import { GetFlashCardsFromDecks, MyDecksUser } from "../Reducer/UserDecks";
+import { updateFlashCard } from "../Reducer/UserFlashCards";
 
 interface Props {
   children: React.ReactNode
@@ -10,11 +11,13 @@ interface Props {
 type GlobalContextProps = {
   globalData: DecksDataGlobal,
   TestId: (id: string) => void,
-  SelectDeck: (deckId: string, id: string, decksUser: DecksUser[]) => void,
+  // SelectDeck: (deckId: string, deckTitle:string, id: string, decksUser: DecksUser[]) => void,
+  SelectDeck: (deck:DecksUser,idUser:string, decksUser: DecksUser[]) => void,
   DecksUserContext: (deckIdUser: string) => void,
   updateDeckShow: () => void,
-  DataToDeckUpdate: (deck:DecksUser ) => void,
-  deckToUpdate:DecksUser,
+  DataToDeckUpdate: (deck: DecksUser) => void,
+  deckToUpdate: DecksUser,
+  handleUpdateFlashCard:(idUser:string, deckData:DecksUser | undefined, currentlyValuesFlashcard:Flashcards) => void
 }
 //crear el contexto
 export const GlobalContext = createContext<GlobalContextProps>({} as GlobalContextProps)
@@ -26,18 +29,24 @@ export function GlobalProvider({ children }: Props) {
   const TestId = (id: string) => {
     dispatch({ type: "idUser", payload: id })
   }
-  const SelectDeck = (deckId: string, id: string, decksUser: DecksUser[]) => {
-    GetFlashCardsFromDecks(dispatch, id, deckId, decksUser)
+  // const SelectDeck = (deckId: string, deckTitle: string, id: string, decksUser: DecksUser[]) => {
+    const SelectDeck = (deck:DecksUser,idUser:string, decksUser: DecksUser[]) => {
+    // GetFlashCardsFromDecks(dispatch, id, deckId, deckTitle, decksUser)
+    GetFlashCardsFromDecks(dispatch, deck,idUser, decksUser)
   }
   const DecksUserContext = (deckIdUser: string) => {
     MyDecksUser(dispatch, deckIdUser)
   }
-  const updateDeckShow = () => {
-    if(settingsDeck === false) dispatch({type:"settingsDeck", payload:true})
-    if(settingsDeck === true) dispatch({type:"settingsDeck", payload:false})
+
+  const handleUpdateFlashCard = (idUser:string, deckData:DecksUser | undefined, currentlyValuesFlashcard:Flashcards) => {
+    updateFlashCard(idUser, deckData, currentlyValuesFlashcard)
   }
-  const DataToDeckUpdate = (deck:DecksUser) => {
-      dispatch({type:"deckToUpdate", payload:deck })
+  const updateDeckShow = () => {
+    if (settingsDeck === false) dispatch({ type: "settingsDeck", payload: true })
+    if (settingsDeck === true) dispatch({ type: "settingsDeck", payload: false })
+  }
+  const DataToDeckUpdate = (deck: DecksUser) => {
+    dispatch({ type: "deckToUpdate", payload: deck })
   }
   return (
     <GlobalContext.Provider value={{
@@ -48,6 +57,7 @@ export function GlobalProvider({ children }: Props) {
       updateDeckShow,
       DataToDeckUpdate,
       deckToUpdate,
+      handleUpdateFlashCard
     }}>
       {children}
     </GlobalContext.Provider>
