@@ -8,6 +8,7 @@ import useOnClickOutside from '../../Hooks/useOnClickOutside';
 import { RiEdit2Fill } from "react-icons/ri";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import DeleteDeckModal from '../../modal/DeleteDeckModal';
+import AddNewFlashcardModal from '../../modal/AddNewFlashcardModal';
 interface Props {
   decksUser: DecksUser[],
   idUser: string
@@ -18,17 +19,26 @@ const ListDecks = ({ decksUser, idUser }: Props) => {
   const { SelectDeck, updateDeckShow, DataToDeckUpdate,globalData } = context
   const [showSettingDeck, setShowSettingDeck] = useState<boolean>(false)
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
+  const [showAddNewFlashcardModal, setShowAddNewFlashcardModal] = useState<boolean>(false)
   const [getIdDeck, setGetIdDeck] = useState<string>('')
   //usare el localstorage para pasarle estos valores a la pagina de flashcards y actualizarlo acada vez que algun valor en local storage cambie
   const handleClickOutside = () => {
     setShowSettingDeck(false)
   }
   useOnClickOutside(setting, handleClickOutside)
+
+  const handleAddNewFlashcard = () => {
+
+  }
   return (
     <div>
         {
           showDeleteModal &&
           <DeleteDeckModal getIdDeck={getIdDeck} idUser={idUser} showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} />
+        }
+        {
+          showAddNewFlashcardModal &&
+          <AddNewFlashcardModal showAddNewFlashcardModal={showAddNewFlashcardModal} setShowAddNewFlashcardModal={setShowAddNewFlashcardModal}/>
         }
       <ul className='grid gap-3 py-4'>
         {
@@ -58,7 +68,7 @@ const ListDecks = ({ decksUser, idUser }: Props) => {
                     <div className='my-2'>
                       <span className='text-gray-200 text-sm capitalize'>{decks.countCards} tarjetas</span>
                     </div>
-                    <div className='hover:border-gray-400 border-[0.1px] w-full border-gray-500 rounded-md p-1 flex justify-center capitalize font-semibold text-sm items-center gap-2'>
+                    <div onClick={()=>{handleAddNewFlashcard; setShowAddNewFlashcardModal(!showAddNewFlashcardModal)}} className='hover:border-gray-400 border-[0.1px] w-full border-gray-500 rounded-md p-1 flex justify-center capitalize font-semibold text-sm items-center gap-2'>
                       <RxPlus className='font-light text-lg text-slate-50' />
                       <span className='text-slate-50'>agregar tarjetas</span>
                     </div>

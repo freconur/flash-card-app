@@ -32,6 +32,7 @@ module.exports = {
         'secundary':'rgb(12 24 50)',
         'modal':'rgba(0,0,0,.24)',
         'background':'#1b1f44',
+        'background-flashcards':'#0f253b',
         'blue-slate':'bg-slate-800',
         
         // 'fisrt-color': ''

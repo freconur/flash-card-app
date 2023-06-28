@@ -29,7 +29,7 @@ const Dashboard = () => {
   }, [])
   return (
     <LayoutDashboard>
-    <div className='w-full bg-background'>
+    <div className='w-full bg-background-flashcards'>
       <FlahsCards/>
     </div>
     </LayoutDashboard>

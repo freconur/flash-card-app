@@ -28,3 +28,14 @@ export const updateFlashCard = async(idUser:string, deckData:DecksUser | undefin
     });
   }
 }
+
+export const deleteFlashcard = async(idUser:string, currentlyDeck: DecksUser | undefined,flascardData:Flashcards | undefined) => {
+  await deleteDoc(doc(db, `/decks-user/${idUser}/flashcards/${currentlyDeck?.id}/cards`, `${flascardData?.id}`));
+}
+
+export const addNewFlashcard = async(idUser:string, idDeck:string, valuesFlashcardNewDeck:Flashcards | undefined) => {
+  const docRef = await addDoc(collection(db, `/decks-user/${idUser}/flashcards/${idDeck}/cards`), {
+    pregunta: valuesFlashcardNewDeck?.pregunta,
+    respuesta: valuesFlashcardNewDeck?.respuesta
+  });
+}
