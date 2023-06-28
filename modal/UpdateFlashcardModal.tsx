@@ -13,17 +13,17 @@ interface PropsDeleteDeck {
 const UpdateFlashcardModal = ({
   showModalUpdateFlashcard, setShowModalUpdateFlashcard,flascardData
 }: PropsDeleteDeck) => {
-  const { globalData } = useGlobalContext()
-  const { idUser, currentlyDeck } = globalData
+  const { globalData,handleUpdateFlashCardTest,SelectDeck } = useGlobalContext()
+  const { idUser, currentlyDeck, decksUser } = globalData
   const [currentlyValuesFlashcard, setCurrentlyValuesFlashcard] = useState<Flashcards | undefined>(flascardData)
   let container;
   if (typeof window !== "undefined") {
     container = document.getElementById("portal-modal");
   }
 
-  // useEffect(() => {
-  //   setCurrentlyValuesFlashcard(flascardData)
-  // },[])
+  useEffect(() => {
+    setCurrentlyValuesFlashcard(flascardData)
+  },[])
 
   const onChangeValueFlashcard = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCurrentlyValuesFlashcard({
@@ -33,11 +33,11 @@ const UpdateFlashcardModal = ({
   }
   const handleUpdateFlashcard = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    updateFlashCard(idUser, currentlyDeck, currentlyValuesFlashcard)
+    // updateFlashCard(idUser, currentlyDeck, currentlyValuesFlashcard)
+    handleUpdateFlashCardTest(idUser, currentlyDeck, currentlyValuesFlashcard)
+    SelectDeck(currentlyDeck,idUser,decksUser)
+    setShowModalUpdateFlashcard(!showModalUpdateFlashcard)
   }
-  console.log('currentlyValuesFlashcard',currentlyValuesFlashcard)
-  console.log('idUser',idUser)
-  console.log('currentlyDeck',currentlyDeck)
   return container
     ? createPortal(
       <div className={styles.containerModal}>

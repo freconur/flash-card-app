@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useState } from "react";
+import { createContext, useContext, useEffect, useReducer, useState } from "react";
 import { DecksInitial } from "../Reducer/Decks.reducer";
 import { DecksReducer } from "../Reducer/Decks.reducer";
 import { GetFlashCardsFromDecks, MyDecksUser } from "../Reducer/UserDecks";
@@ -12,12 +12,12 @@ type GlobalContextProps = {
   globalData: DecksDataGlobal,
   TestId: (id: string) => void,
   // SelectDeck: (deckId: string, deckTitle:string, id: string, decksUser: DecksUser[]) => void,
-  SelectDeck: (deck:DecksUser,idUser:string, decksUser: DecksUser[]) => void,
+  SelectDeck: (deck:DecksUser | undefined,idUser:string, decksUser: DecksUser[]) => void,
   DecksUserContext: (deckIdUser: string) => void,
   updateDeckShow: () => void,
   DataToDeckUpdate: (deck: DecksUser) => void,
   deckToUpdate: DecksUser,
-  handleUpdateFlashCard:(idUser:string, deckData:DecksUser | undefined, currentlyValuesFlashcard:Flashcards) => void
+  handleUpdateFlashCardTest:(idUser:string, deckData:DecksUser | undefined, currentlyValuesFlashcard:Flashcards | undefined) => void
 }
 //crear el contexto
 export const GlobalContext = createContext<GlobalContextProps>({} as GlobalContextProps)
@@ -26,11 +26,12 @@ export const GlobalContext = createContext<GlobalContextProps>({} as GlobalConte
 export function GlobalProvider({ children }: Props) {
   const [globalData, dispatch] = useReducer(DecksReducer, DecksInitial)
   const { settingsDeck, deckToUpdate } = globalData
+
   const TestId = (id: string) => {
     dispatch({ type: "idUser", payload: id })
   }
   // const SelectDeck = (deckId: string, deckTitle: string, id: string, decksUser: DecksUser[]) => {
-    const SelectDeck = (deck:DecksUser,idUser:string, decksUser: DecksUser[]) => {
+    const SelectDeck = (deck:DecksUser | undefined,idUser:string, decksUser: DecksUser[]) => {
     // GetFlashCardsFromDecks(dispatch, id, deckId, deckTitle, decksUser)
     GetFlashCardsFromDecks(dispatch, deck,idUser, decksUser)
   }
@@ -38,7 +39,7 @@ export function GlobalProvider({ children }: Props) {
     MyDecksUser(dispatch, deckIdUser)
   }
 
-  const handleUpdateFlashCard = (idUser:string, deckData:DecksUser | undefined, currentlyValuesFlashcard:Flashcards) => {
+  const handleUpdateFlashCardTest = (idUser:string, deckData:DecksUser | undefined, currentlyValuesFlashcard:Flashcards | undefined) => {
     updateFlashCard(idUser, deckData, currentlyValuesFlashcard)
   }
   const updateDeckShow = () => {
@@ -57,7 +58,7 @@ export function GlobalProvider({ children }: Props) {
       updateDeckShow,
       DataToDeckUpdate,
       deckToUpdate,
-      handleUpdateFlashCard
+      handleUpdateFlashCardTest
     }}>
       {children}
     </GlobalContext.Provider>

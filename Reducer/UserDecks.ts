@@ -36,6 +36,7 @@ export const CreateUser = async (dispatch: (action: any) => void, id: string, us
 }
 export const AddNewDeck = async (deck: DecksUser) => {
   await addDoc(collection(db, "/decks-user/0os5NJzUxma1TXbRhHHXn2woqOl2/flashcards"), deck);
+  // await addDoc(collection(db, "/cards/0os5NJzUxma1TXbRhHHXn2woqOl2/flashcards"), deck);
 }
 
 export const MyDecksUser = (dispatch: (action: any) => void, id: string) => {
@@ -45,9 +46,9 @@ export const MyDecksUser = (dispatch: (action: any) => void, id: string) => {
     snapshot.docs.forEach((doc) => {
       decksUser.push({ ...doc.data(), id: doc.id });
     });
-    decksUser.map(async(deck) => {
+    decksUser.map(async (deck) => {
       const querySnapshot = await getDocs(collection(db, `/decks-user/${id}/flashcards/${deck.id}/cards`));
-      let count:number = 0 
+      let count: number = 0
       querySnapshot.forEach((doc) => {
         count = count + 1
       });
@@ -56,14 +57,14 @@ export const MyDecksUser = (dispatch: (action: any) => void, id: string) => {
       await updateDoc(countCards, {
         countCards: count
       });
-  })
+    })
     const decksUserFocusProperty = decksUser.map((deck, index) => ({
       ...deck,
       focus: false
     }))
     const decksUserFocusWithFirstIndex = decksUserFocusProperty.map((deck, index) => {
-      if(index === 0) {
-        deck.focus = true 
+      if (index === 0) {
+        deck.focus = true
       }
       return deck
     })
@@ -93,7 +94,7 @@ export const FlashCardsInit = async (dispatch: (action: any) => void, id: string
 }
 
 // export const GetFlashCardsFromDecks = async (dispatch: (action: any) => void, idUser: string, deckId: string,deckTitle:string, decksUser: DecksUser[]) => {
-  export const GetFlashCardsFromDecks = async (dispatch: (action: any) => void, deckData:DecksUser,idUser:string, decksUser: DecksUser[]) => {
+export const GetFlashCardsFromDecks = async (dispatch: (action: any) => void, deckData: DecksUser | undefined, idUser: string, decksUser: DecksUser[]) => {
   let decksUserFocusProperty
   if (decksUser) {
     decksUserFocusProperty = decksUser?.map((deck) => ({
@@ -101,9 +102,9 @@ export const FlashCardsInit = async (dispatch: (action: any) => void, id: string
       focus: false
     }))
   }
-  if(decksUserFocusProperty) {
+  if (decksUserFocusProperty) {
     const rta = decksUserFocusProperty.map(deck => {
-      if(deck.id === deckData.id){
+      if (deck.id === deckData?.id) {
         deck.focus = true
       }
       return deck
@@ -111,20 +112,20 @@ export const FlashCardsInit = async (dispatch: (action: any) => void, id: string
     dispatch({ type: "getDecksUser", payload: rta });
   }
 
-  const colRefCards = collection(db, `/decks-user/${idUser}/flashcards/${deckData.id}/cards`)
+  const colRefCards = collection(db, `/decks-user/${idUser}/flashcards/${deckData?.id}/cards`)
   const userCards: Flashcards[] = [];
   onSnapshot(colRefCards, (snapshot) => {
     snapshot.docs.forEach((doc) => {
       userCards.push({ ...doc.data(), id: doc.id })
     })
-    dispatch({ type: "getFlashcardsFromDecks", payload: userCards, payload2: deckData.title, payload3:deckData})
+    dispatch({ type: "getFlashcardsFromDecks", payload: userCards, payload2: deckData?.title, payload3: deckData })
   }
   )
 }
 
-  export const updateDataDeck = async(id:string, dataToUpdate:DecksUser) => {
+export const updateDataDeck = async (id: string, dataToUpdate: DecksUser) => {
 
-const deckToUpdate = doc(db, `/decks-user/${id}/flashcards`, `${dataToUpdate.id}`);
+  const deckToUpdate = doc(db, `/decks-user/${id}/flashcards`, `${dataToUpdate.id}`);
 
   await updateDoc(deckToUpdate, {
     title: dataToUpdate.title,
@@ -133,9 +134,9 @@ const deckToUpdate = doc(db, `/decks-user/${id}/flashcards`, `${dataToUpdate.id}
   });
 }
 
-export const deleteDeck = async(id:string, idDeck:string) => {
+export const deleteDeck = async (id: string, idDeck: string) => {
 
-await deleteDoc(doc(db, `/decks-user/${id}/flashcards`, `${idDeck}`));
+  await deleteDoc(doc(db, `/decks-user/${id}/flashcards`, `${idDeck}`));
 }
 
 
