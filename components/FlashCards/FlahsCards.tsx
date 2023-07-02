@@ -28,7 +28,7 @@ const FlahsCards = () => {
                       {/* <RiEdit2Fill onClick={() => handleUpdateFlashCard(idUser, currentlyDecks)} className='text-gray-300 hover:text-gray-100 font-semibold text-md' /> */}
                       <RiDeleteBin6Fill onClick={() => { setShowModalDeleteFlashcard(!showModalDeleteFlashcard); setFlascardData(card) }} className='text-gray-300 hover:text-gray-100 font-semibold text-md' />
                     </div>
-                  <Link className='relative z-10' href="/dashboard/flashcards">
+                  <Link className='relative z-10' href={`/dashboard/deck/${currentlyDeck?.id}`}>
                     <p className='h-full w-full'>{card.pregunta}</p>
                     {/* <p>Respuesta: {card.respuesta}</p> */}
                   </Link>

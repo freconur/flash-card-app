@@ -14,7 +14,8 @@ interface DecksUser {
   title?:string,
   focus?:boolean
   colorDeck?:string,
-  countCards?:number
+  countCards?:number,
+  index?:number
 }
 interface Flashcards {
   id?:string
@@ -28,6 +29,8 @@ interface DecksUserToUpdate {
 }
 interface DecksDataGlobal {
   idUser: string,
+  idDeck: string,
+  idFlashcard?:string,
   decksUser: DecksUser[],
   userCards: Flashcards[],
   getFlashcardsFromDecks: Flashcards[],
@@ -36,7 +39,10 @@ interface DecksDataGlobal {
   settingsDeck: boolean,
   deckToUpdate:DecksUser,
   getTitleFromDeck:string,
-  currentlyDeck?:DecksUser
+  currentlyDeck?:DecksUser,
+  flashcardsOnSanpshot:Flashcards[],
+  flashcardIndex:number,
+  currentlyDeckData:DecksUser
 }
 interface UseSelectColor {
   color:string,

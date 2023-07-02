@@ -39,6 +39,14 @@ export const AddNewDeck = async (deck: DecksUser) => {
   // await addDoc(collection(db, "/cards/0os5NJzUxma1TXbRhHHXn2woqOl2/flashcards"), deck);
 }
 
+export const decksUserServerSideProps = async (id:string) => {
+  const rta = await getDocs(collection(db, `/decks-user/${id}/flashcards`));
+  let deckUser:DecksUser[] = []
+  rta.forEach((doc) => {
+    deckUser.push({ ...doc.data(), id: doc.id });
+  });
+  return deckUser
+}
 export const MyDecksUser = (dispatch: (action: any) => void, id: string) => {
   const res = collection(db, `/decks-user/${id}/flashcards`);
   onSnapshot(res, (snapshot) => {
@@ -71,7 +79,12 @@ export const MyDecksUser = (dispatch: (action: any) => void, id: string) => {
     dispatch({ type: "getDecksUser", payload: decksUserFocusWithFirstIndex });
   });
 }
-
+export const decksUserById = async(idUser:string, idDeck:string, index:number) => {
+  const colRef = doc(db,`/decks-user/${idUser}/flashcards/`, idDeck);
+  await updateDoc(colRef, {
+    index: index
+  })
+}
 export const FlashCardsInit = async (dispatch: (action: any) => void, id: string) => {
   const colRef = collection(db, `/decks-user/${id}/flashcards/`);
   const q = query(colRef, limit(1));

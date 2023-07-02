@@ -8,11 +8,17 @@ type Decks =
   | { type: "conditionalValue"; payload:number}
   | { type: "settingsDeck"; payload:boolean}
   | { type: "deckToUpdate"; payload:DecksUser}
+  | { type: "flashcardsOnSanpshot"; payload:Flashcards[]}
+  | { type: "getAllIdUser"; payload:string, payload2:string}
+  | { type: "flashcardIndex"; payload:number}
+  | { type: "currentlyDeckData"; payload:DecksUser}
   
 
 
 export const DecksInitial = {
   idUser: "" as string,
+  idDeck: '' as string,
+  // idFlashcard: '' as string,
   decksUser: [] as DecksUser[],
   userCards: [] as Flashcards[],
   getFlashcardsFromDecks: [] as Flashcards[],
@@ -21,11 +27,41 @@ export const DecksInitial = {
   settingsDeck: false as boolean,
   deckToUpdate: {} as DecksUser,
   getTitleFromDeck: '' as string,
-  currentlyDeck:{} as DecksUser
+  currentlyDeck:{} as DecksUser,
+  flashcardsOnSanpshot: [] as Flashcards[],
+  flashcardIndex: 0 as number,
+  currentlyDeckData:{} as DecksUser
 }
 
 export const DecksReducer = (state: DecksDataGlobal, action: Decks) => {
   switch (action.type) {
+    
+    case "currentlyDeckData":{
+      return {
+        ...state,
+        currentlyDeckData:action.payload
+      }
+    }
+    case "flashcardIndex": {
+      return {
+        ...state,
+        flashcardIndex:action.payload
+      }
+    }
+    case "getAllIdUser": {
+      return {
+        ...state,
+        idUser:action.payload,
+        idDeck:action.payload2,
+        // idFlashcard: action.payload3
+      }
+    }
+    case "flashcardsOnSanpshot": {
+      return {
+        ...state,
+        flashcardsOnSanpshot:action.payload
+      }
+    }
       case "idUser": {
         return {
           ...state,

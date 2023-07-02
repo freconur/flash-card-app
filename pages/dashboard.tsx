@@ -1,52 +1,53 @@
-import { app } from 'firebase-admin'
-import { getAuth, signOut } from 'firebase/auth'
+'client'
 import {
   AuthAction,
   useAuthUser,
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth'
-import { authApp } from '../firebase/firebase.config'
-import { useEffect, useReducer, useState } from 'react'
-import { CreateUser, ValidateUser } from '../Reducer/UserDecks'
+import { FC, useEffect, useReducer, useState } from 'react'
+import { CreateUser, ValidateUser, decksUserServerSideProps } from '../Reducer/UserDecks'
 import { DecksInitial, DecksReducer } from '../Reducer/Decks.reducer'
 import LayoutDashboard from '../layout/LayoutDashboard'
 import { TestUser } from '../helpers/userFunctions'
 import FlahsCards from '../components/FlashCards/FlahsCards'
-import SidebarDashboard from '../components/sidebar/SidebarDashboard'
-import { useGlobalContext } from '../context/ContextGlobal'
+type Props = {
+  decksUser: DecksUser[]
+  // idUser: string
+}
+export const getServerSideProps = withAuthUserTokenSSR({ whenUnauthed: AuthAction.REDIRECT_TO_LOGIN })(async ({AuthUser}) => {
+  const idUser = AuthUser.id as string
+  const decksUser = await decksUserServerSideProps(idUser)
+  
+  if (typeof window !== 'undefined') {
+        localStorage.setItem('ID_USER',JSON.stringify(idUser));
+    }
+  return { 
+    props: {decksUser}
+  }
+}
+  )
 
-const Dashboard = () => {
+const Dashboard: any = ({ decksUser }: Props) => {
   const AuthUser = useAuthUser()
   const [state, dispatch] = useReducer(DecksReducer, DecksInitial)
-  const [user, setUser] = useState<UserData>({})
   const infoUser = { id: `${AuthUser.id}`, email: `${AuthUser.email}`, name: `${AuthUser.displayName}` }
-  
+
   useEffect(() => {
     TestUser(dispatch, infoUser)
     dispatch({ type: "idUser", payload: `${AuthUser.id}` })
-    
   }, [])
   return (
     <LayoutDashboard>
-    <div className='w-full bg-background-flashcards'>
-      <FlahsCards/>
-    </div>
+      <div className='w-full bg-background-flashcards'>
+        <FlahsCards />
+      </div>
     </LayoutDashboard>
   )
 }
 
 // Note that this is a higher-order function.
-export const getServerSideProps = withAuthUserTokenSSR(
-  {
-    whenUnauthed: AuthAction.REDIRECT_TO_LOGIN
 
-  })(async () => {
-    return {
-      props: {}
-    }
-  }
-  )
 //se ejecuta en el servidor
 
 export default withAuthUser({

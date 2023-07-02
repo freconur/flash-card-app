@@ -34,8 +34,6 @@
   border-radius: 5px;
 }
 .buttonUpdate {
-  /* background-color: red; */
-  /* background: linear-gradient(90deg, rgba(255,134,0,1) 0%, rgba(255,0,37,1) 100%); */
   background: linear-gradient(90deg, rgba(49,174,176,1) 0%, rgba(0,97,255,1) 100%);
   color: #000000bf;
   font-weight: 600;
@@ -69,11 +67,9 @@
   border: 1px solid #4cd5ff;
 }
 .textareaPregunta:hover {
-  /* opacity: .7; */
   cursor: pointer;
 }
 .textareaPregunta:focus {
-  /* opacity: .7; */
   cursor:text;
 }
 
@@ -86,9 +82,10 @@
   text-align: center;
 }
 .closeContainer {
+  width: 100%;
   display: flex;
-  justify-content: end;
   align-items: center;
+  justify-content: flex-end;
 }
 .close {
   display: flex;

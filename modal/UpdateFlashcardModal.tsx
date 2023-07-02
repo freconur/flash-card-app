@@ -7,14 +7,15 @@ import { updateFlashCard } from "../Reducer/UserFlashCards";
 interface PropsDeleteDeck {
   showModalUpdateFlashcard: boolean;
   setShowModalUpdateFlashcard: React.Dispatch<React.SetStateAction<boolean>>;
-  flascardData: Flashcards | undefined
+  flascardData: Flashcards | undefined;
+  forceUpdate?:React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const UpdateFlashcardModal = ({
-  showModalUpdateFlashcard, setShowModalUpdateFlashcard, flascardData
+  showModalUpdateFlashcard, setShowModalUpdateFlashcard, flascardData,forceUpdate
 }: PropsDeleteDeck) => {
   const { globalData, handleUpdateFlashCardTest, SelectDeck } = useGlobalContext()
-  const { idUser, currentlyDeck, decksUser } = globalData
+  const { idUser, currentlyDeck, decksUser,idDeck } = globalData
   const [currentlyValuesFlashcard, setCurrentlyValuesFlashcard] = useState<Flashcards | undefined>(flascardData)
   let container;
   if (typeof window !== "undefined") {
@@ -33,18 +34,26 @@ const UpdateFlashcardModal = ({
   }
   const handleUpdateFlashcard = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // updateFlashCard(idUser, currentlyDeck, currentlyValuesFlashcard)
-    handleUpdateFlashCardTest(idUser, currentlyDeck, currentlyValuesFlashcard)
-    SelectDeck(currentlyDeck, idUser, decksUser)
+    if(idUser && idDeck) {
+    handleUpdateFlashCardTest(idUser, idDeck, currentlyValuesFlashcard)
     setShowModalUpdateFlashcard(!showModalUpdateFlashcard)
+    }else {
+      handleUpdateFlashCardTest(idUser, currentlyDeck, currentlyValuesFlashcard)
+      SelectDeck(currentlyDeck, idUser, decksUser)
+      setShowModalUpdateFlashcard(!showModalUpdateFlashcard)
+    }
   }
+  console.log('idDeck',idDeck)
+  console.log('idUser',idUser)
+  console.log('flascardData',flascardData)
   return container
     ? createPortal(
       <div className={styles.containerModal}>
         {/* <div className="bg-modal  backdrop-blur-[0.5px] fixed inset-0 z-30 md:hidden"> */}
         <form onSubmit={handleUpdateFlashcard} className={styles.containerUpdate}>
           <div onClick={()=>setShowModalUpdateFlashcard(!showModalUpdateFlashcard)} className={styles.closeContainer}>
-            <div className={styles.close}>x</div>
+            {/* x */}
+            <p className={styles.close}>x</p>
           </div>
           <h3 className={styles.title}>editar flashcard</h3>
           <div className={styles.textareaContainer}>
