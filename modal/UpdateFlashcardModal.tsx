@@ -8,14 +8,13 @@ interface PropsDeleteDeck {
   showModalUpdateFlashcard: boolean;
   setShowModalUpdateFlashcard: React.Dispatch<React.SetStateAction<boolean>>;
   flascardData: Flashcards | undefined;
-  forceUpdate?:React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const UpdateFlashcardModal = ({
-  showModalUpdateFlashcard, setShowModalUpdateFlashcard, flascardData,forceUpdate
+  showModalUpdateFlashcard, setShowModalUpdateFlashcard, flascardData
 }: PropsDeleteDeck) => {
   const { globalData, handleUpdateFlashCardTest, SelectDeck } = useGlobalContext()
-  const { idUser, currentlyDeck, decksUser,idDeck } = globalData
+  const { idUser, currentlyDeck, decksUser } = globalData
   const [currentlyValuesFlashcard, setCurrentlyValuesFlashcard] = useState<Flashcards | undefined>(flascardData)
   let container;
   if (typeof window !== "undefined") {
@@ -34,18 +33,11 @@ const UpdateFlashcardModal = ({
   }
   const handleUpdateFlashcard = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if(idUser && idDeck) {
-    handleUpdateFlashCardTest(idUser, idDeck, currentlyValuesFlashcard)
+
+    handleUpdateFlashCardTest(idUser, currentlyDeck?.id as string, currentlyValuesFlashcard)
+    SelectDeck(currentlyDeck, idUser, decksUser)
     setShowModalUpdateFlashcard(!showModalUpdateFlashcard)
-    }else {
-      handleUpdateFlashCardTest(idUser, currentlyDeck, currentlyValuesFlashcard)
-      SelectDeck(currentlyDeck, idUser, decksUser)
-      setShowModalUpdateFlashcard(!showModalUpdateFlashcard)
-    }
   }
-  console.log('idDeck',idDeck)
-  console.log('idUser',idUser)
-  console.log('flascardData',flascardData)
   return container
     ? createPortal(
       <div className={styles.containerModal}>

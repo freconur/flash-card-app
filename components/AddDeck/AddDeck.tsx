@@ -5,15 +5,17 @@ import DeckColors from '../DeckColors/DeckColors';
 interface Props {
   newDeck: (newDeck: DecksUser) => void,
   showFormAddDeck: boolean,
-  setShowFormAddDeck: React.Dispatch<React.SetStateAction<boolean>>
+  setShowFormAddDeck: React.Dispatch<React.SetStateAction<boolean>>,
+  idUser:string
 }
 
 const INITIAL_DECK_VALUES: DecksUser = {
   title: "",
   colorDeck: "0",
-  countCards: 0
+  countCards: 0,
+  index:0
 }
-const AddDeck = ({ newDeck, showFormAddDeck, setShowFormAddDeck }: Props) => {
+const AddDeck = ({ newDeck, showFormAddDeck, setShowFormAddDeck,idUser }: Props) => {
   const [deckValues, setDeckValues] = useState<DecksUser>(INITIAL_DECK_VALUES)
   const handleChangeNewDeck = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDeckValues({
@@ -24,9 +26,10 @@ const AddDeck = ({ newDeck, showFormAddDeck, setShowFormAddDeck }: Props) => {
   const newDeckSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     newDeck(deckValues)
-    AddNewDeck(deckValues)
+    AddNewDeck(idUser,deckValues)
     setDeckValues(INITIAL_DECK_VALUES)
   }
+
   return (
     <div className={`${showFormAddDeck && 'duration-300 h-full bottom-0 left-0'} absolute z-[200] -left-[500px] duration-300 bg-secundary p-2 w-full h-altura`}>
       <div className='flex justify-between mb-4 items-center gap-4'>

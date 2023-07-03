@@ -1,18 +1,20 @@
 import { createPortal } from "react-dom";
 import styles from '../styles/DeleteDeckModal.module.css'
 import { deleteDeck } from "../Reducer/UserDecks";
-import { deleteFlashcard } from "../Reducer/UserFlashCards";
+import { deleteFlashcard, deleteFlashcardWidthIds } from "../Reducer/UserFlashCards";
 import { useGlobalContext } from "../context/ContextGlobal";
 interface PropsDeleteDeck {
   showModalDeleteFlashcard: boolean;
   setShowModalDeleteFlashcard: React.Dispatch<React.SetStateAction<boolean>>;
-  currentlyDeck: DecksUser | undefined;
+  currentlyDeck?: DecksUser | undefined;
   idUser: string
-  flascardData: Flashcards | undefined
+  // flascardData: Flashcards | undefined,
+  idFlashcard: string,
+  idDeck:string
 }
 
 const DeleteFlashcardModal = ({
-  showModalDeleteFlashcard, setShowModalDeleteFlashcard, currentlyDeck, idUser, flascardData
+  showModalDeleteFlashcard, setShowModalDeleteFlashcard, idUser,idFlashcard,idDeck,currentlyDeck
 }: PropsDeleteDeck) => {
   const { SelectDeck,globalData } = useGlobalContext()
   const { decksUser } = globalData
@@ -22,11 +24,10 @@ const DeleteFlashcardModal = ({
   }
 
   const handleDeleteFlashcard = () => {
-    deleteFlashcard(idUser, currentlyDeck, flascardData)
-    SelectDeck(currentlyDeck,idUser,decksUser)
-    setShowModalDeleteFlashcard(!showModalDeleteFlashcard)
+    deleteFlashcard(idUser, idDeck, idFlashcard)
+      SelectDeck(currentlyDeck,idUser,decksUser)
+      setShowModalDeleteFlashcard(!showModalDeleteFlashcard)
   }
-  
   return container
     ? createPortal(
       <div className={styles.containerModal}>

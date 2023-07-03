@@ -34,8 +34,8 @@ export const CreateUser = async (dispatch: (action: any) => void, id: string, us
   await setDoc(doc(db, "users", id), userData);
   await setDoc(doc(db, "decks-user", id), infoDeck);
 }
-export const AddNewDeck = async (deck: DecksUser) => {
-  await addDoc(collection(db, "/decks-user/0os5NJzUxma1TXbRhHHXn2woqOl2/flashcards"), deck);
+export const AddNewDeck = async (id:string ,deck: DecksUser) => {
+  await addDoc(collection(db, `/decks-user/${id}/flashcards`), deck);
   // await addDoc(collection(db, "/cards/0os5NJzUxma1TXbRhHHXn2woqOl2/flashcards"), deck);
 }
 

@@ -44,7 +44,7 @@ const FlahsCards = () => {
       }
       {
         showModalDeleteFlashcard &&
-        <DeleteFlashcardModal flascardData={flascardData} currentlyDeck={currentlyDeck} idUser={idUser} showModalDeleteFlashcard={showModalDeleteFlashcard} setShowModalDeleteFlashcard={setShowModalDeleteFlashcard} />
+        <DeleteFlashcardModal currentlyDeck={currentlyDeck} idFlashcard={flascardData?.id as string} idDeck={currentlyDeck?.id as string} idUser={idUser} showModalDeleteFlashcard={showModalDeleteFlashcard} setShowModalDeleteFlashcard={setShowModalDeleteFlashcard} />
       }
     </>
   )

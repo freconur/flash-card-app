@@ -11,6 +11,10 @@ import { RiEdit2Fill } from "react-icons/ri";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import UpdateFlashcardModal from '../../../modal/UpdateFlashcardModal';
 import { decksUserById } from '../../../Reducer/UserDecks';
+import DeleteFlashcardModal from '../../../modal/DeleteFlashcardModal';
+import AddNewFlashcardModal from '../../../modal/AddNewFlashcardModal';
+import { RxPlus } from "react-icons/rx";
+
 
 type Props = {
   flashcards: Flashcards[]
@@ -21,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = withAuthUserTokenSSR()(asy
   const idDeck = query?.id as string
   const idUser = AuthUser.id as string
   const flashcards = await flashcardFromDeck(idUser, idDeck)
-  return { props: { } }
+  return { props: {} }
 })
 
 const FlashcardsToPractice = () => {
@@ -31,9 +35,18 @@ const FlashcardsToPractice = () => {
   const { query } = useRouter()
   const idDecks = query.id as string
   const { flashcardsOnSanpshot, flashcardIndex, currentlyDeckData } = globalData
+  const id = currentlyDeckData.index as number
   const [selectedIndex, setSelectedIndex] = useState<number>(9999)
   const [showRespuesta, setShowRespuesta] = useState<boolean>(false)
   const [showModalUpdateFlashcard, setShowModalUpdateFlashcard] = useState<boolean>(false)
+  const [showModalDeleteFlashcard, setShowModalDeleteFlashcard] = useState<boolean>(false)
+  const [showAddNewFlashcardModal, setShowAddNewFlashcardModal] = useState<boolean>(false)
+
+  useEffect(() => {
+    getDataCurrentlyDeck(idUsers, idDecks)
+    getAllIdUser(idUsers, idDecks)
+    OnSnapshotFlashcards(idUsers, idDecks)
+  }, [selectedIndex])
 
   const selectFlashcard = (index: number, selectFlashcard: Flashcards[], next = true) => {
     const condition = next ? index < selectFlashcard.length - 1 : index > 0
@@ -42,12 +55,6 @@ const FlashcardsToPractice = () => {
     flashcardIndexContext(nextIndex)
     decksUserById(idUsers, idDecks, nextIndex)
   }
-  useEffect(() => {
-    getDataCurrentlyDeck(idUsers, idDecks)
-    getAllIdUser(idUsers, idDecks)
-    OnSnapshotFlashcards(idUsers, idDecks)
-  }, [selectedIndex])
-
   const prev = () => {
     if (selectedIndex === 9999) {
       selectFlashcard(currentlyDeckData.index as number, flashcardsOnSanpshot, false)
@@ -71,18 +78,23 @@ const FlashcardsToPractice = () => {
   }
   return (
     <>
-      {
-        showModalUpdateFlashcard &&
-        <UpdateFlashcardModal flascardData={flashcardsOnSanpshot[flashcardIndex]} showModalUpdateFlashcard={showModalUpdateFlashcard} setShowModalUpdateFlashcard={setShowModalUpdateFlashcard} />
-      }
+      {showModalUpdateFlashcard && <UpdateFlashcardModal flascardData={flashcardsOnSanpshot[id]} showModalUpdateFlashcard={showModalUpdateFlashcard} setShowModalUpdateFlashcard={setShowModalUpdateFlashcard} />}
+      {showModalDeleteFlashcard && <DeleteFlashcardModal idDeck={idDecks} idUser={idUsers} idFlashcard={flashcardsOnSanpshot[selectedIndex === 9999 ? currentlyDeckData.index as number : selectedIndex]?.id as string} showModalDeleteFlashcard={showModalDeleteFlashcard} setShowModalDeleteFlashcard={setShowModalDeleteFlashcard} />}
+      {showAddNewFlashcardModal && <AddNewFlashcardModal showAddNewFlashcardModal={showAddNewFlashcardModal} setShowAddNewFlashcardModal={setShowAddNewFlashcardModal} />}
       {flashcardsOnSanpshot
         &&
         <div className='bg-secundary h-altura flex justify-center items-center'>
 
           <div className='relative z-40 h-[80%] w-[80%] bg-background-flashcards border-[1px] border-slate-100 rounded-md'>
-            <div className="flex justify-end items-center gap-3 m-5">
-              <RiEdit2Fill onClick={() => setShowModalUpdateFlashcard(!showModalUpdateFlashcard)} className='text-gray-300 hover:text-gray-100 font-semibold text-xl' />
-              <RiDeleteBin6Fill className='text-gray-300 hover:text-gray-100 font-semibold text-xl' />
+
+            <div className="flex justify-between items-center gap-3 m-5">
+              <div onClick={()=>setShowAddNewFlashcardModal(!showAddNewFlashcardModal)} className='flex rounded-full opacity-50 hover:opacity-100 duration-300 bg-blue-300 w-[30px] h-[30px] justify-center items-center'>
+                <RxPlus className='cursor-pointer text-xl' />
+              </div>
+              <div className='flex justify-center items-center gap-5'>
+                <RiEdit2Fill onClick={() => setShowModalUpdateFlashcard(!showModalUpdateFlashcard)} className='cursor-pointer text-gray-300 hover:text-gray-100 font-semibold text-xl' />
+                <RiDeleteBin6Fill onClick={() => setShowModalDeleteFlashcard(!showModalDeleteFlashcard)} className='cursor-pointer text-gray-300 hover:text-gray-100 font-semibold text-xl' />
+              </div>
             </div>
             <div className='flex w-[100%] p-5 justify-center items-center h-[45%]'>
               <h3 className='text-center text-slate-300 text-3xl'>

@@ -19,7 +19,7 @@ const Deck = () => {
           {
             getFlashcardsFromDecks?.map(flashcard => {
               return (
-                <li>
+                <li key={flashcard.id}>
                   <div>
                     {flashcard.pregunta}
                   </div>

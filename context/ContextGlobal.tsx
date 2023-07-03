@@ -16,7 +16,7 @@ type GlobalContextProps = {
   updateDeckShow: () => void,
   DataToDeckUpdate: (deck: DecksUser) => void,
   deckToUpdate: DecksUser,
-  handleUpdateFlashCardTest: (idUser: string, deckData: DecksUser | string | undefined, currentlyValuesFlashcard: Flashcards | undefined) => void,
+  handleUpdateFlashCardTest: (idUser: string, idDeck:string, currentlyValuesFlashcard: Flashcards | undefined) => void,
   OnSnapshotFlashcards: (idUser: string, idDeck: string) => void,
   getAllIdUser:(idUser:string, idDeck:string) => void,
   flashcardIndexContext:(index:number) => void,
@@ -45,8 +45,8 @@ export function GlobalProvider({ children }: Props) {
   const getAllIdUser = (idUser:string, idDeck:string) => {
   dispatch({ type: "getAllIdUser", payload:idUser, payload2:idDeck})
   }
-  const handleUpdateFlashCardTest = (idUser: string, deckData: DecksUser | string | undefined, currentlyValuesFlashcard: Flashcards | undefined) => {
-    updateFlashCard(idUser, deckData, currentlyValuesFlashcard)
+  const handleUpdateFlashCardTest = (idUser: string, idDeck:string, currentlyValuesFlashcard: Flashcards | undefined) => {
+    updateFlashCard(idUser, idDeck, currentlyValuesFlashcard)
   }
   const flashcardIndexContext = (index:number) => {
     dispatch({type:"flashcardIndex", payload:index})

@@ -18,7 +18,7 @@ const initAuth = () => {
         projectId: 'flashcardsapi-4701e',
         clientEmail: 'firebase-adminsdk-8ce04@flashcardsapi-4701e.iam.gserviceaccount.com',
         // The private key must not be accessible on the client side.
-        privateKey: process.env.FIREBASE_PRIVATE_KEY
+        privateKey: process.env.FIREBASE_PRIVATE_KEY as string
       },
       // databaseURL: 'https://my-example-app.firebaseio.com',
     },
